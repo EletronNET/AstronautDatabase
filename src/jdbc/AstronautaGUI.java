@@ -174,7 +174,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 						      
 						      menuSexo.add(miMale);menuSexo.add(miFemale);menuSexo.add(miAmbos);
 						      
-						  JMenu menuPais = MenuBuilder.newMenuCheckBox("Pais", 'P', sPais, mcbh);
+						  JMenu menuPais = MenuBuilder.newCheckBoxMenu("Pais", 'P', sPais, mcbh);
 						  menuPais.setIcon(new ImageIcon("./imagens/flags/_united-nations.png"));
 						      
 				      menuConsulta.add(menuPais);

@@ -29,7 +29,7 @@ public final class MenuBuilder {
 		      return menu;
 		}
 	
-	public static JMenu newMenuCheckBox(String nome,int acc, String itens[],
+	public static JMenu newCheckBoxMenu(String nome,int acc, String itens[],
 	         ItemListener il) {
 	      JMenu menu = new JMenu(nome); menu.setMnemonic(acc);
 	      ButtonGroup bgCB = new ButtonGroup();
