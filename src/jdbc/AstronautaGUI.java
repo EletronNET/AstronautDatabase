@@ -49,8 +49,8 @@ import dao.AstronautaDAO;
 @SuppressWarnings("serial")
 public class AstronautaGUI extends JFrame implements ListSelectionListener {
 
-	private ArrayList<Astronauta> 			astronautas;
-	private ArrayList<Pais> 				paises;
+	private static ArrayList<Astronauta> 	astronautas;
+	private static ArrayList<Pais> 			paises;
 	private DefaultListModel<Astronauta>	modelAstro;
 	private DefaultListModel<Pais> 			modelPais;
 	private ListaDeAstronautas 				listaDeAstronautas; 						// caixa de lista p/ escolha nome
@@ -116,11 +116,66 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 	      "Ajuda","help16.gif","A", null, null, null,
 	      "Sobre ...","about16.gif","S"};
 	
-	@SuppressWarnings("unused")
-	private static String 	strSexo = "ALL", 
-							strMissao = "ALL", 
-							strPais = "ALL",
-							strDataNasc = "ALL";
+	private String 	strSexo = "ALL", 
+					strMissao = "ALL", 
+					strPais = "ALL",
+					strDataNasc = "ALL";
+	
+	public static ArrayList<Astronauta> getAstronautas() {
+		return astronautas;
+	}
+
+	public static void setAstronautas(ArrayList<Astronauta> astronautas) {
+		AstronautaGUI.astronautas = astronautas;
+	}
+	
+	public static ArrayList<Pais> getPaises() {
+		return paises;
+	}
+
+	public static void setPaises(ArrayList<Pais> paises) {
+		AstronautaGUI.paises = paises;
+	}
+
+	public ListaDeAstronautas getListaDeAstronautas() {
+		return listaDeAstronautas;
+	}
+
+	public void setListaDeAstronautas(ListaDeAstronautas listaDeAstronautas) {
+		this.listaDeAstronautas = listaDeAstronautas;
+	}
+
+	public String getStrDataNasc() {
+		return strDataNasc;
+	}
+
+	public void setStrDataNasc(String strDataNasc) {
+		this.strDataNasc = strDataNasc;
+	}
+
+	public String getStrMissao() {
+		return strMissao;
+	}
+
+	public void setStrMissao(String strMissao) {
+		this.strMissao = strMissao;
+	}
+
+	public String getStrPais() {
+		return strPais;
+	}
+
+	public void setStrPais(String strPais) {
+		this.strPais = strPais;
+	}
+
+	public String getStrSexo() {
+		return strSexo;
+	}
+
+	public void setStrSexo(String strSexo) {
+		this.strSexo = strSexo;
+	}
 
 	/*
 	 *  Construtor da Interface Gráfica
@@ -256,7 +311,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 	 */
 	
 	// TENTA CONEXAO COM O BANCO DE DADOS
-	private void consultaSQL() throws HeadlessException, SQLException {
+	public void consultaSQL() throws HeadlessException, SQLException {
 		try (Connection con = AstronautaDB.getRemoteConnection()){	
 			atualizaDados(con);
 		}	catch (SQLException e){
@@ -276,8 +331,8 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		
 		AstronautaDAO dao 	= new AstronautaDAO(connection);
 		
-		astronautas 		= dao.pegaAstronautas(connection);
-		paises 				= dao.pegaPaises(connection);
+		setAstronautas(dao.pegaAstronautas(connection));
+		setPaises(dao.pegaPaises(connection));
 	}
 	
 	
@@ -315,9 +370,9 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 	 */
 	public void mostraStatusListaAstro() {
 		System.out.println("LISTA ASTRONAUTAS");
-		System.out.println("Pais = " + strPais);
-		System.out.println("Sexo = " + strSexo);
-		for (Astronauta astronauta : this.astronautas) {
+		System.out.println("Pais = " + getStrPais());
+		System.out.println("Sexo = " + getStrSexo());
+		for (Astronauta astronauta : astronautas) {
 			System.out.println(astronauta);
 		}
 	}
@@ -328,13 +383,13 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd MMMMM yyyy");
 		
-		int i = listaDeAstronautas.getSelectedIndex();
+		int i = getListaDeAstronautas().getSelectedIndex();
 		if (i == -1)
 			return;
 		
 		// CRIA A ÁREA DE TEXTO COM INFO DO ASTRONAUTA
 		// exibe informacoes do astronauta: ID, nome, pa�s de origem, data de nascimento, sexo.
-		Astronauta selecionado = listaDeAstronautas.getSelectedValue();
+		Astronauta selecionado = getListaDeAstronautas().getSelectedValue();
 		StringBuilder sb = new StringBuilder("REGISTRO: \t" + selecionado.getIdAstronauta() + "\n");
 		String nome = selecionado.getPrimeiro_Nome() + " " 
 					+ selecionado.getNome_do_Meio() + " " 
@@ -372,9 +427,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		try {
 				img = ImageIO.read(new File("./imagens/people/" + selecionado.getFoto())); 
 
-			} catch (IOException eio){
-			
-			}
+			} catch (IOException eio){}
 		
 		BufferedImage imagem = formataImagem(img, larguraJanela, alturaJanela);
 		
@@ -430,54 +483,67 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		         
 		         if (acao.equals("Atualiza")){
 		         		System.out.println("atualizando ----------------------------------------->");
-		         		listaDeAstronautas.atualizaLista(astronautas, strSexo, strPais);
+		         		getListaDeAstronautas().atualizaLista(getAstronautas(), getStrSexo(), getStrPais());
 		         		System.out.println("Consulta atualizada com sucesso-------> " + listaDeAstronautas.getModel().getSize() + " registros encontrados.");
 		         	}
 		      }
 
 	   }
      		 
-	   public class MenuPaisHandler implements ItemListener {
+	   private class MenuPaisHandler implements ItemListener {
 
 			@Override
 			public void itemStateChanged(ItemEvent eventoPais) {
 				
-				String paisSel = ((JMenuItem)eventoPais.getSource()).getIcon().toString();
+				int stateButton = eventoPais.getStateChange();
 				
-				// A expressão abaixo retorna o código ISO-3 do país, a partir do ícone armazenado no JMenuItem
-				strPais = paisSel.substring(16,19);
+				if (stateButton == ItemEvent.SELECTED) {
 				
-				try {
-					System.out.println("atualizando ----------------------------------------->");
-					listaDeAstronautas.atualizaLista(astronautas, strSexo, strPais);
-					System.out.println("Consulta atualizada com sucesso-------> " + listaDeAstronautas.getModel().getSize() + " registros encontrados.");
-				} catch (NullPointerException e1) {
-					System.out.println("strPais = " + strPais);
-					System.out.println("strSexo = " + strSexo);
-					e1.printStackTrace();
-				}
+					String paisSel = ((JMenuItem)eventoPais.getSource()).getIcon().toString();
+					
+					// A expressão abaixo retorna o código ISO-3 do país, a partir do ícone armazenado no JMenuItem
+					setStrPais(paisSel.substring(16,19));
+					
+					try {
+						System.out.println("atualizando ----------------------------------------->");
+						getListaDeAstronautas().atualizaLista(getAstronautas(), getStrSexo(), getStrPais());
+						System.out.println("Filtro (PAIS = " + getStrPais() + ") aplicado com sucesso-------> " + getListaDeAstronautas().getModel().getSize() + " registros encontrados.");
+					} catch (NullPointerException e1) {
+						System.out.println("strPais = " + strPais);
+						System.out.println("strSexo = " + strSexo);
+						e1.printStackTrace();
+						}
+				
+				  }
 				
 				}
 				
 			}
 
 	   
-	   public class MenuSexoHandler implements ItemListener {
+	   private class MenuSexoHandler implements ItemListener {
 
 			@Override
 			public void itemStateChanged(ItemEvent eventoSexo) {
-				String sexoSel = ((JMenuItem)eventoSexo.getSource()).getText();
 				
-				switch(sexoSel) {
+				int stateButton = eventoSexo.getStateChange();
 				
-					case "Ambos" : default	:	{strSexo = "ALL"; 	break;}
-					case "Masculino" 		:	{strSexo = "M"; 	break;}
-					case "Feminino" 		:	{strSexo = "F"; 	break;}
-				}	
-				
-				System.out.println("atualizando ----------------------------------------->");
-         		listaDeAstronautas.atualizaLista(astronautas, strSexo, strPais);
-         		System.out.println("Consulta atualizada com sucesso-------> " + listaDeAstronautas.getModel().getSize() + " registros encontrados.");
+				if (stateButton == ItemEvent.SELECTED) {
+					
+					String sexoSel = ((JMenuItem)eventoSexo.getSource()).getText();
+					
+					switch(sexoSel) {
+					
+						case "Ambos" : default	:	{setStrSexo("ALL"); 	break;}
+						case "Masculino" 		:	{setStrSexo("M");	 	break;}
+						case "Feminino" 		:	{setStrSexo("F");	 	break;}
+					}	
+					
+					System.out.println("atualizando ----------------------------------------->");
+	         		getListaDeAstronautas().atualizaLista(getAstronautas(), getStrSexo(), getStrPais());
+	         		System.out.println("Filtro (SEXO = " + getStrSexo() + ") aplicado com sucesso-------> " + getListaDeAstronautas().getModel().getSize() + " registros encontrados.");
+	         		
+				}
 			}
 	   }
 	       
