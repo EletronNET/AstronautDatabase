@@ -49,20 +49,20 @@ import dao.AstronautaDAO;
 @SuppressWarnings("serial")
 public class AstronautaGUI extends JFrame implements ListSelectionListener {
 
-	private static ArrayList<Astronauta> astronautas;
-	private static ArrayList<Pais> paises;
-	private static DefaultListModel<Astronauta>		modelAstro = new DefaultListModel<>();
-	private static DefaultListModel<Pais> 			modelPais =  new DefaultListModel<>();
-	private static ListaDeAstronautas listaAstro; 			// caixa de lista p/ escolha nome
-	private static JList<Pais> listaPais; 					// caixa de lista p/ escolha pais
-	private static JTextArea taInfo; 					// areas de texto p/ info astronauta
-	private static JTextArea taInfoBio;
-	private static JLabel label; 						// label que contem a foto do astronauta
+	private ArrayList<Astronauta> 			astronautas;
+	private ArrayList<Pais> 				paises;
+	private DefaultListModel<Astronauta>	modelAstro;
+	private DefaultListModel<Pais> 			modelPais;
+	private ListaDeAstronautas 				listaDeAstronautas; 						// caixa de lista p/ escolha nome
+	private JList<Pais> 					listaPais; 									// caixa de lista p/ escolha pais
+	private JTextArea 						taInfo; 									// areas de texto p/ info astronauta
+	private JTextArea 						taInfoBio;
+	private JLabel 							label; 										// label que contem a foto do astronauta
 	
 	private File arqFonte = new File ("./fontes/Spaceport.ttf"); 
 	
-	public static int 	larguraJanela = 140;			// o tamanho da janela da foto
-	public static int 	alturaJanela = larguraJanela * 3/2;
+	private static int 	larguraJanela = 140;			// o tamanho da janela da foto
+	private static int 	alturaJanela = larguraJanela * 3/2;
 
 	private static String sArquivo[] = {
 	      "Novo","new16.gif","N", 
@@ -116,10 +116,11 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 	      "Ajuda","help16.gif","A", null, null, null,
 	      "Sobre ...","about16.gif","S"};
 	
-	static String 	strSexo = "ALL", 
-					strMissao = "", 
-					strPais = "ALL",
-					strDataNasc = "";
+	@SuppressWarnings("unused")
+	private static String 	strSexo = "ALL", 
+							strMissao = "ALL", 
+							strPais = "ALL",
+							strDataNasc = "ALL";
 
 	/*
 	 *  Construtor da Interface Gráfica
@@ -139,8 +140,8 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		
 	      JMenuBar mb = new JMenuBar();
 	      MenuHandler mh = new MenuHandler();
-	      MenuRadioHandler mrh = new MenuRadioHandler();
-	      MenuPaisCheckBoxHandler mcbh = new MenuPaisCheckBoxHandler();
+	      MenuSexoHandler mrh = new MenuSexoHandler();
+	      MenuPaisHandler mcbh = new MenuPaisHandler();
 	      
 	      MenuBuilder.imagePrefix = "./imagens/vetor/";
 	      mb.add(MenuBuilder.newMenu("Arquivo", 'A', sArquivo, mh));
@@ -173,9 +174,10 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 						      bg.add(miMale);bg.add(miFemale);bg.add(miAmbos);
 						      
 						      menuSexo.add(miMale);menuSexo.add(miFemale);menuSexo.add(miAmbos);
-						      
-						  JMenu menuPais = MenuBuilder.newCheckBoxMenu("Pais", 'P', sPais, mcbh);
-						  menuPais.setIcon(new ImageIcon("./imagens/flags/_united-nations.png"));
+						  
+						  MenuBuilder.imagePrefix = "./imagens/flags/";
+						  JMenu menuPais = MenuBuilder.newRadioButtonMenu("Pais", 'P', sPais, mcbh);
+						  menuPais.setIcon(new ImageIcon(MenuBuilder.imagePrefix + "_united-nations.png"));
 						      
 				      menuConsulta.add(menuPais);
 				      menuConsulta.add(menuSexo);
@@ -200,7 +202,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		// painel de divisao
 		JSplitPane split1 = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
 				new JLabel(new ImageIcon("imagens/vetor/logoAstroDB.png")), // imagem
-				new JScrollPane(listaAstro)); // diretorio
+				new JScrollPane(listaDeAstronautas)); // diretorio
 		
 		JSplitPane split2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,// painel de divisao interno 
 				label = new JLabel(), // janela com a Foto do astronauta
@@ -244,8 +246,8 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		taInfoBio.setLineWrap(true);
 		taInfoBio.setWrapStyleWord(true);
 		setSize(1200, 700); // dimensiona janela
-		listaAstro.addListSelectionListener(this);
-		listaAstro.setSelectedIndex(0); // elemento inicial da lista
+		listaDeAstronautas.addListSelectionListener(this);
+		listaDeAstronautas.setSelectedIndex(0); // elemento inicial da lista
 		//pack();
 	}
 	/**
@@ -271,9 +273,11 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 	// atualiza dados
 	public void atualizaDados(Connection connection)
 			throws SQLException {
-		AstronautaDAO dao = new AstronautaDAO(connection);
-		astronautas = dao.pegaAstronautas(connection);
-		paises = dao.pegaPaises(connection);
+		
+		AstronautaDAO dao 	= new AstronautaDAO(connection);
+		
+		astronautas 		= dao.pegaAstronautas(connection);
+		paises 				= dao.pegaPaises(connection);
 	}
 	
 	
@@ -283,6 +287,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 	public void criaListas() {
 		// CRIA LISTA DE ASTRONAUTAS E CARREGA NO JLIST
 		 
+		modelAstro 	= new DefaultListModel<>();
 		for (Astronauta a : astronautas){
 			modelAstro.addElement(a);
 		}
@@ -291,17 +296,15 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 				
 		// CRIA LISTA DE PAISES E CARREGA NO JLIST
 		
+		modelPais = new DefaultListModel<>();
 		for (Pais p : paises){
 			modelPais.addElement(p);
 		}
-		/*
-		 * @FIX listaPais = new JList<String>(modelPais); // de paises
-		 */
 		
-		listaAstro = new ListaDeAstronautas(); 
-		listaAstro.setModel(modelAstro);
+		listaDeAstronautas = new ListaDeAstronautas(); 
+		listaDeAstronautas.setModel(modelAstro);
 		listaPais = new JList<Pais>(modelPais);
-		listaAstro.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listaDeAstronautas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listaPais.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 	}
@@ -314,7 +317,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		System.out.println("LISTA ASTRONAUTAS");
 		System.out.println("Pais = " + strPais);
 		System.out.println("Sexo = " + strSexo);
-		for (Astronauta astronauta : astronautas) {
+		for (Astronauta astronauta : this.astronautas) {
 			System.out.println(astronauta);
 		}
 	}
@@ -323,15 +326,16 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
 		
-		int i = listaAstro.getSelectedIndex();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd MMMMM yyyy");
+		
+		int i = listaDeAstronautas.getSelectedIndex();
 		if (i == -1)
 			return;
-		SimpleDateFormat sdf = new SimpleDateFormat("dd MMMMM yyyy");
 		
 		// CRIA A ÁREA DE TEXTO COM INFO DO ASTRONAUTA
 		// exibe informacoes do astronauta: ID, nome, pa�s de origem, data de nascimento, sexo.
-		Astronauta selecionado = listaAstro.getSelectedValue();
-		StringBuilder sb = new StringBuilder("ID: \t" + selecionado.getIdAstronauta() + "\n");
+		Astronauta selecionado = listaDeAstronautas.getSelectedValue();
+		StringBuilder sb = new StringBuilder("REGISTRO: \t" + selecionado.getIdAstronauta() + "\n");
 		String nome = selecionado.getPrimeiro_Nome() + " " 
 					+ selecionado.getNome_do_Meio() + " " 
 					+ selecionado.getSobrenome() + "\n";
@@ -346,11 +350,11 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		sb.append("PAIS: \t"  + pais );
 		sb.append("ESTADO: \t" + estado );
 		sb.append("CIDADE: \t" + cidade );
-		sb.append("NASC: \t" + dataNasc);
+		sb.append("NASCTO: \t" + dataNasc);
 
 		if (!(strDataFalec.equals("2100-01-01")) && !(strDataFalec.isEmpty())) 
 			{
-				sb.append("FALEC: \t" + (sdf.format(dataFalec) + "\n"));
+				sb.append("FALECTO: \t" + (sdf.format(dataFalec) + "\n"));
 		}
 		
 		sb.append("SEXO: \t" + (selecionado.getSexo().charAt(0) == 'M' ? "masculino" : "feminino") + "\n\n");
@@ -391,7 +395,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 	}
 	
 	
-	   private class MenuHandler implements ActionListener {
+	   public class MenuHandler implements ActionListener {
 		   
 		   	@Override	
 		    public void actionPerformed(ActionEvent e) {
@@ -426,33 +430,43 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		         
 		         if (acao.equals("Atualiza")){
 		         		System.out.println("atualizando ----------------------------------------->");
-		         		listaAstro.atualizaLista(astronautas, strSexo, strPais);
-		         		System.out.println("Consulta atualizada com sucesso-------> " + listaAstro.getModel().getSize() + " registros encontrados.");
+		         		listaDeAstronautas.atualizaLista(astronautas, strSexo, strPais);
+		         		System.out.println("Consulta atualizada com sucesso-------> " + listaDeAstronautas.getModel().getSize() + " registros encontrados.");
 		         	}
 		      }
 
 	   }
      		 
-	   private class MenuPaisCheckBoxHandler implements ItemListener {
+	   public class MenuPaisHandler implements ItemListener {
 
 			@Override
-			public void itemStateChanged(ItemEvent eventoSelecionaPais) {
+			public void itemStateChanged(ItemEvent eventoPais) {
 				
-				String paisSel = ((JMenuItem)eventoSelecionaPais.getSource()).getIcon().toString();
+				String paisSel = ((JMenuItem)eventoPais.getSource()).getIcon().toString();
 				
 				// A expressão abaixo retorna o código ISO-3 do país, a partir do ícone armazenado no JMenuItem
 				strPais = paisSel.substring(16,19);
-		
+				
+				try {
+					System.out.println("atualizando ----------------------------------------->");
+					listaDeAstronautas.atualizaLista(astronautas, strSexo, strPais);
+					System.out.println("Consulta atualizada com sucesso-------> " + listaDeAstronautas.getModel().getSize() + " registros encontrados.");
+				} catch (NullPointerException e1) {
+					System.out.println("strPais = " + strPais);
+					System.out.println("strSexo = " + strSexo);
+					e1.printStackTrace();
+				}
+				
 				}
 				
 			}
 
 	   
-	   private class MenuRadioHandler implements ItemListener {
+	   public class MenuSexoHandler implements ItemListener {
 
 			@Override
-			public void itemStateChanged(ItemEvent eventoSelecionaSexo) {
-				String sexoSel = ((JMenuItem)eventoSelecionaSexo.getSource()).getText();
+			public void itemStateChanged(ItemEvent eventoSexo) {
+				String sexoSel = ((JMenuItem)eventoSexo.getSource()).getText();
 				
 				switch(sexoSel) {
 				
@@ -462,8 +476,8 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 				}	
 				
 				System.out.println("atualizando ----------------------------------------->");
-         		listaAstro.atualizaLista(astronautas, strSexo, strPais);
-         		System.out.println("Consulta atualizada com sucesso-------> " + listaAstro.getModel().getSize() + " registros encontrados.");
+         		listaDeAstronautas.atualizaLista(astronautas, strSexo, strPais);
+         		System.out.println("Consulta atualizada com sucesso-------> " + listaDeAstronautas.getModel().getSize() + " registros encontrados.");
 			}
 	   }
 	       

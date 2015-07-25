@@ -141,10 +141,10 @@ public class AstronautaDAO {
 								sexo, 		// String
 								info,		// String
 								info_eng,	// String
-								dataNasc, 	// Date
-								dataFalec,  // Date
+								dataNasc, 	// sql.Date
+								dataFalec,  // sql.Date
 								missoes,	// ArrayList<String>
-								imagem		// Blob
+								imagem		// sql.Blob
 					);
 					
 					astronauta.setIdAstronauta(id);
@@ -157,7 +157,7 @@ public class AstronautaDAO {
 	
 	public ArrayList<Astronauta> pegaAstronautas(Connection connection)
 			throws SQLException {
-		ArrayList<Astronauta> astronautas = new ArrayList<>();
+		ArrayList<Astronauta> alAstros = new ArrayList<>();
 		Statement statement = connection.createStatement();
 		@SuppressWarnings("unused")
 		boolean resultado = statement.execute
@@ -200,19 +200,19 @@ public class AstronautaDAO {
 							missao,
 							imagem);
 		
-					astronautas.add(a);
+					alAstros.add(a);
 			}
 				resultSet.close();
 			} catch (Exception e) {
 				System.out.println("Erro de acesso ao Banco de Dados");
 				e.printStackTrace();
 				}
-			return astronautas;
+			return alAstros;
 	}
 	
 	public ArrayList<Pais> pegaPaises(Connection connection)
 			throws SQLException {
-		ArrayList<Pais> paises = new ArrayList<>();
+		ArrayList<Pais> alPaises = new ArrayList<>();
 		Statement statement = connection.createStatement();
 		@SuppressWarnings("unused")
 		boolean resultado = statement.execute
@@ -224,14 +224,14 @@ public class AstronautaDAO {
 					
 					Pais pais = new Pais(id, nome);
 		
-					paises.add(pais);
+					alPaises.add(pais);
 			}
 				resultSet.close();
 			} catch (Exception e) {
 				System.out.println("Erro de acesso ao Banco de Dados");
 				e.printStackTrace();
 				}
-			return paises;
+			return alPaises;
 	}
 
 	public void adiciona(Astronauta astronauta) {
