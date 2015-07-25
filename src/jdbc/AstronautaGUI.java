@@ -51,7 +51,6 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 
 	private static ArrayList<Astronauta> 	astronautas;
 	private static ArrayList<Pais> 			paises;
-	private DefaultListModel<Astronauta>	modelAstro;
 	private DefaultListModel<Pais> 			modelPais;
 	private ListaDeAstronautas 				listaDeAstronautas; 						// caixa de lista p/ escolha nome
 	private JList<Pais> 					listaPais; 									// caixa de lista p/ escolha pais
@@ -178,14 +177,14 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 	}
 
 	/*
-	 *  Construtor da Interface Gráfica
+	 *  Construtor
 	 */
 	public AstronautaGUI() throws SQLException, IOException {
 		super("Astronaut Database"); // ajusta titulo
 	    setIconImage(new ImageIcon("./imagens/vetor/astronaut-icon.png").getImage());  
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // acao fechar
 	    
-		inicializaLista();
+		inicializa();
 	}
 
 	/**
@@ -310,44 +309,56 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 	 * @throws SQLException
 	 */
 	
-	// TENTA CONEXAO COM O BANCO DE DADOS
+	/**
+	 * Conecta com o BD MySql
+	 * 
+	 * @throws HeadlessException
+	 * @throws SQLException
+	 */
 	public void consultaSQL() throws HeadlessException, SQLException {
 		try (Connection con = AstronautaDB.getRemoteConnection()){	
-			atualizaDados(con);
+			carregaDados(con);
 		}	catch (SQLException e){
 			JOptionPane.showMessageDialog(null, 
-					"Não foi possível estabelecer conexão remota. Tentando conexão local...", 
+					"Não foi possível estabelecer conexão remota. Pressione OK para tentar conexão local...", 
 					"Erro", JOptionPane.ERROR_MESSAGE);
 			try (Connection con = AstronautaDB.getLocalConnection()){
-				atualizaDados(con);
+				carregaDados(con);
 			}
 		}
 		
 	}
 
-	// atualiza dados
-	public void atualizaDados(Connection connection)
+	/**
+	 * @method carregaDados
+	 * @param Connection connection
+	 * 
+	 * Cria os ArrayLists:
+	 * 
+	 * 1) astronautas 	- coleção de todos os astronautas recuperada do banco de dados MySql
+	 * 2) paises 		- coleção de todos os paises recuperada do banco de dados MySql
+	 * 
+	 */
+	public void carregaDados(Connection connection)
 			throws SQLException {
 		
 		AstronautaDAO dao 	= new AstronautaDAO(connection);
 		
-		setAstronautas(dao.pegaAstronautas(connection));
-		setPaises(dao.pegaPaises(connection));
+		setAstronautas	(dao.pegaAstronautas(connection));
+		setPaises		(dao.pegaPaises(connection));
 	}
 	
 	
 	/**
+	 * 
 	 * Cria listas de astronautas e países
 	 */
 	public void criaListas() {
 		// CRIA LISTA DE ASTRONAUTAS E CARREGA NO JLIST
 		 
-		modelAstro 	= new DefaultListModel<>();
-		for (Astronauta a : getAstronautas()){
-			modelAstro.addElement(a);
-		}
-			
-		System.out.println("Registros: " + modelAstro.getSize());
+		listaDeAstronautas = new ListaDeAstronautas(getAstronautas());
+
+		System.out.println("Registros: " + getListaDeAstronautas().getModelAstro().getSize());
 				
 		// CRIA LISTA DE PAISES E CARREGA NO JLIST
 		
@@ -356,10 +367,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 			modelPais.addElement(p);
 		}
 		
-		listaDeAstronautas = new ListaDeAstronautas(); 
-		listaDeAstronautas.setModel(modelAstro);
 		listaPais = new JList<Pais>(modelPais);
-		listaDeAstronautas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listaPais.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 	}
@@ -372,9 +380,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		System.out.println("LISTA ASTRONAUTAS");
 		System.out.println("Pais = " + getStrPais());
 		System.out.println("Sexo = " + getStrSexo());
-		for (Astronauta astronauta : getAstronautas()) {
-			System.out.println(astronauta);
-		}
+		System.out.println(listaDeAstronautas);
 	}
 
 	// classe implementa listener
@@ -394,7 +400,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		String nome = selecionado.getPrimeiro_Nome() + " " 
 					+ selecionado.getNome_do_Meio() + " " 
 					+ selecionado.getSobrenome() + "\n";
-		String pais = mostraPais(selecionado.getPais_Nasc()) + "\n";
+		String pais = mostraNome(selecionado.getPais_Nasc()) + "\n";
 		String estado = selecionado.getEstado_Nasc() + "\n";
 		String cidade = selecionado.getCidade_Nasc() + "\n";
 		String dataNasc = (sdf.format(selecionado.getDtNasc()) + "\n");
@@ -483,8 +489,9 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		         
 		         if (acao.equals("Atualiza")){
 		         		System.out.println("atualizando ----------------------------------------->");
-		         		getListaDeAstronautas().atualizaLista(getAstronautas(), getStrSexo(), getStrPais());
-		         		System.out.println("Consulta atualizada com sucesso-------> " + listaDeAstronautas.getModel().getSize() + " registros encontrados.");
+		         		getListaDeAstronautas().atualiza(getAstronautas(), getStrSexo(), getStrPais());
+		         		System.out.println("Operação realizada com sucesso-------> " + getListaDeAstronautas().getModel().getSize() + " registros encontrados.");
+		         		mostraStatusListaAstro();
 		         	}
 		      }
 
@@ -504,16 +511,12 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 					// A expressão abaixo retorna o código ISO-3 do país, a partir do ícone armazenado no JMenuItem
 					setStrPais(paisSel.substring(16,19));
 					
-					try {
 						System.out.println("atualizando ----------------------------------------->");
-						getListaDeAstronautas().atualizaLista(getAstronautas(), getStrSexo(), getStrPais());
-						System.out.println("Filtro (PAIS = " + getStrPais() + ") aplicado com sucesso-------> " + getListaDeAstronautas().getModel().getSize() + " registros encontrados.");
-					} catch (NullPointerException e1) {
-						System.out.println("strPais = " + strPais);
-						System.out.println("strSexo = " + strSexo);
-						e1.printStackTrace();
-						}
-				
+						listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
+						System.out.println("Filtro (PAIS = " + getStrPais() + ") aplicado com sucesso-------> " 
+								+ getListaDeAstronautas().getModel().getSize() + " registros encontrados.");
+						mostraStatusListaAstro();
+
 				  }
 				
 				}
@@ -540,25 +543,30 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 					}	
 					
 					System.out.println("atualizando ----------------------------------------->");
-	         		getListaDeAstronautas().atualizaLista(getAstronautas(), getStrSexo(), getStrPais());
-	         		System.out.println("Filtro (SEXO = " + getStrSexo() + ") aplicado com sucesso-------> " + getListaDeAstronautas().getModel().getSize() + " registros encontrados.");
+	         		listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
+	         		System.out.println("Filtro (SEXO = " + getStrSexo() + ") aplicado com sucesso-------> " 
+	         				+ getListaDeAstronautas().getModel().getSize() + " registros encontrados.");
+	         		mostraStatusListaAstro();
 	         		
 				}
 			}
 	   }
 	       
-	
-	   private void inicializaLista() throws HeadlessException, SQLException {
+	   /*
+	    *           INICIALIZAÇÃO DOS COMPONENTES
+	    */
+	   private void inicializa() throws HeadlessException, SQLException {
 			    /*
 			     * INICIALIZA DADOS DAS LISTAS E CRIA O PAINEL PRINCIPAL  
 			     */
-			criaMenu();
-			consultaSQL(); 
-			criaListas();
+			
+		   	consultaSQL(); 
+			criaListas();			
 			criaPainel();
+			criaMenu();
 		}
 
-	public String mostraPais(String paisISO){
+	public String mostraNome(String paisISO){
 		for (Pais p : paises){
 			if (p.getId().equalsIgnoreCase(paisISO)){
 				return p.getNome();
