@@ -343,7 +343,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		// CRIA LISTA DE ASTRONAUTAS E CARREGA NO JLIST
 		 
 		modelAstro 	= new DefaultListModel<>();
-		for (Astronauta a : astronautas){
+		for (Astronauta a : getAstronautas()){
 			modelAstro.addElement(a);
 		}
 			
@@ -372,7 +372,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		System.out.println("LISTA ASTRONAUTAS");
 		System.out.println("Pais = " + getStrPais());
 		System.out.println("Sexo = " + getStrSexo());
-		for (Astronauta astronauta : astronautas) {
+		for (Astronauta astronauta : getAstronautas()) {
 			System.out.println(astronauta);
 		}
 	}
