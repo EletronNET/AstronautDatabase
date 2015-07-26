@@ -22,12 +22,10 @@ import java.util.Collection;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -36,13 +34,13 @@ import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
-import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import modelo.Astronauta;
 import modelo.ListaDeAstronautas;
+import modelo.ListaDePaises;
 import modelo.Pais;
 import dao.AstronautaDAO;
 
@@ -50,10 +48,9 @@ import dao.AstronautaDAO;
 public class AstronautaGUI extends JFrame implements ListSelectionListener {
 
 	private static Collection<Astronauta> 	astronautas;
-	private static Collection<Pais> 		paises;
-	private DefaultListModel<Pais> 			modelPais;
+	private static Collection<Pais> 		paises;	
 	private ListaDeAstronautas 				listaDeAstronautas; 						// caixa de lista p/ escolha nome
-	private JList<Pais> 					listaPais; 									// caixa de lista p/ escolha pais
+	private ListaDePaises					listaDePaises;								// caixa de lista p/ escolha pais	
 	private JTextArea 						taInfo; 									// areas de texto p/ info astronauta
 	private JTextArea 						taInfoBio;
 	private JLabel 							label; 										// label que contem a foto do astronauta
@@ -144,6 +141,14 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		this.listaDeAstronautas = listaDeAstronautas;
 	}
 
+	public ListaDePaises getListaDePaises() {
+		return listaDePaises;
+	}
+	
+	public void setListaDePaises(ListaDePaises listaDePaises) {
+		this.listaDePaises = listaDePaises;
+	}
+	
 	public String getStrDataNasc() {
 		return strDataNasc;
 	}
@@ -330,7 +335,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 	}
 
 	/**
-	 * @method carregaDados
+	 * @method importaBD
 	 * @param Connection connection
 	 * 
 	 * Cria os ArrayLists:
@@ -361,14 +366,9 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		System.out.println("Registros: " + getListaDeAstronautas().getModelAstro().getSize());
 				
 		// CRIA LISTA DE PAISES E CARREGA NO JLIST
+
 		
-		modelPais = new DefaultListModel<>();
-		for (Pais p : paises){
-			modelPais.addElement(p);
-		}
-		
-		listaPais = new JList<Pais>(modelPais);
-		listaPais.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listaDePaises = new ListaDePaises(getPaises());
 		
 	}
 
@@ -411,11 +411,11 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		sb.append("PAIS: \t"  + pais );
 		sb.append("ESTADO: \t" + estado );
 		sb.append("CIDADE: \t" + cidade );
-		sb.append("NASCTO: \t" + dataNasc);
+		sb.append("NASCEU: \t" + dataNasc);
 
 		if (!(strDataFalec.equals("2100-01-01")) && !(strDataFalec.isEmpty())) 
 			{
-				sb.append("FALECTO: \t" + (sdf.format(dataFalec) + "\n"));
+				sb.append("FALECEU: \t" + (sdf.format(dataFalec) + "\n"));
 		}
 		
 		sb.append("SEXO: \t" + (selecionado.getSexo().charAt(0) == 'M' ? "masculino" : "feminino") + "\n\n");
@@ -489,7 +489,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		         
 		         if (acao.equals("Atualiza")){
 		         		System.out.println("atualizando ----------------------------------------->");
-		         		getListaDeAstronautas().atualiza(getAstronautas(), getStrSexo(), getStrPais());
+		         		listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
 		         		System.out.println("Operação realizada com sucesso-------> " + getListaDeAstronautas().getModel().getSize() + " registros encontrados.");
 		         		mostraStatusListaAstro();
 		         	}
@@ -511,9 +511,9 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 					
 						System.out.println("atualizando ----------------------------------------->");
 						listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
-						System.out.println("Filtro (PAIS = " + getStrPais() + ") aplicado com sucesso-------> " 
+						System.out.println("Filtro [PAIS = " + getStrPais() + "] aplicado com sucesso-------> " 
 								+ getListaDeAstronautas().getModel().getSize() + " registros encontrados.");
-						mostraStatusListaAstro();
+						//mostraStatusListaAstro();
 
 				  }
 				
@@ -540,9 +540,9 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 					
 					System.out.println("atualizando ----------------------------------------->");
 	         		listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
-	         		System.out.println("Filtro (SEXO = " + getStrSexo() + ") aplicado com sucesso-------> " 
+	         		System.out.println("Filtro [SEXO = " + getStrSexo() + "] aplicado com sucesso-------> " 
 	         				+ getListaDeAstronautas().getModel().getSize() + " registros encontrados.");
-	         		mostraStatusListaAstro();
+	         		//mostraStatusListaAstro();
 	         		
 				}
 			}
