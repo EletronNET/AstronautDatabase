@@ -238,6 +238,11 @@ public class AstronautaDAO {
 		// TODO Auto-generated method stub
 		
 	}
+	
 
+	public static final Astronauta NENHUM 
+		= new Astronauta(0, "SEM REGISTRO", "", "", "", "", "", 
+				"anonymous.jpg", "M", "", "", java.sql.Date.valueOf("1900-01-01"), 
+				java.sql.Date.valueOf("2100-01-01"), new ArrayList<String>(), null);
 
 }

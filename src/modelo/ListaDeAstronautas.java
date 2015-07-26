@@ -1,6 +1,5 @@
 package modelo;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 
@@ -103,7 +102,7 @@ public class ListaDeAstronautas extends JList<Astronauta>{
 	
 	}
 
-	public void ordena(ArrayList<Astronauta> listaDeAstronautas, Comparator<Astronauta> c){
+	public void ordena(Collection<Astronauta> listaDeAstronautas, Comparator<Astronauta> c){
 		
 		DefaultListModel<Astronauta> modelAstroOrdena = new DefaultListModel<>();
 		

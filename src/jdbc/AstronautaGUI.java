@@ -388,14 +388,17 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 	public void valueChanged(ListSelectionEvent e) {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd MMMMM yyyy");
+		Astronauta selecionado;
 		
 		int i = getListaDeAstronautas().getSelectedIndex();
-		if (i == -1)
-			return;
+		if (i == -1) {
+				selecionado = AstronautaDAO.NENHUM;
+			} else {
+				selecionado = getListaDeAstronautas().getSelectedValue();
+			}
 		
 		// CRIA A ÁREA DE TEXTO COM INFO DO ASTRONAUTA
 		// exibe informacoes do astronauta: ID, nome, pa�s de origem, data de nascimento, sexo.
-		Astronauta selecionado = getListaDeAstronautas().getSelectedValue();
 		StringBuilder sb = new StringBuilder("REGISTRO: \t" + selecionado.getIdAstronauta() + "\n");
 		String nome = selecionado.getPrimeiro_Nome() + " " 
 					+ selecionado.getNome_do_Meio() + " " 
