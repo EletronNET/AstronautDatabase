@@ -17,7 +17,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -49,8 +49,8 @@ import dao.AstronautaDAO;
 @SuppressWarnings("serial")
 public class AstronautaGUI extends JFrame implements ListSelectionListener {
 
-	private static ArrayList<Astronauta> 	astronautas;
-	private static ArrayList<Pais> 			paises;
+	private static Collection<Astronauta> 	astronautas;
+	private static Collection<Pais> 		paises;
 	private DefaultListModel<Pais> 			modelPais;
 	private ListaDeAstronautas 				listaDeAstronautas; 						// caixa de lista p/ escolha nome
 	private JList<Pais> 					listaPais; 									// caixa de lista p/ escolha pais
@@ -120,19 +120,19 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 					strPais = "ALL",
 					strDataNasc = "ALL";
 	
-	public static ArrayList<Astronauta> getAstronautas() {
+	public static Collection<Astronauta> getAstronautas() {
 		return astronautas;
 	}
 
-	public static void setAstronautas(ArrayList<Astronauta> astronautas) {
+	public static void setAstronautas(Collection<Astronauta> astronautas) {
 		AstronautaGUI.astronautas = astronautas;
 	}
 	
-	public static ArrayList<Pais> getPaises() {
+	public static Collection<Pais> getPaises() {
 		return paises;
 	}
 
-	public static void setPaises(ArrayList<Pais> paises) {
+	public static void setPaises(Collection<Pais> paises) {
 		AstronautaGUI.paises = paises;
 	}
 
@@ -317,13 +317,13 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 	 */
 	public void consultaSQL() throws HeadlessException, SQLException {
 		try (Connection con = AstronautaDB.getRemoteConnection()){	
-			carregaDados(con);
+			importaBD(con);
 		}	catch (SQLException e){
 			JOptionPane.showMessageDialog(null, 
 					"Não foi possível estabelecer conexão remota. Pressione OK para tentar conexão local...", 
 					"Erro", JOptionPane.ERROR_MESSAGE);
 			try (Connection con = AstronautaDB.getLocalConnection()){
-				carregaDados(con);
+				importaBD(con);
 			}
 		}
 		
@@ -339,7 +339,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 	 * 2) paises 		- coleção de todos os paises recuperada do banco de dados MySql
 	 * 
 	 */
-	public void carregaDados(Connection connection)
+	public void importaBD(Connection connection)
 			throws SQLException {
 		
 		AstronautaDAO dao 	= new AstronautaDAO(connection);
@@ -502,9 +502,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 			@Override
 			public void itemStateChanged(ItemEvent eventoPais) {
 				
-				int stateButton = eventoPais.getStateChange();
-				
-				if (stateButton == ItemEvent.SELECTED) {
+				if (eventoPais.getStateChange() == ItemEvent.SELECTED) {
 				
 					String paisSel = ((JMenuItem)eventoPais.getSource()).getIcon().toString();
 					
@@ -529,9 +527,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 			@Override
 			public void itemStateChanged(ItemEvent eventoSexo) {
 				
-				int stateButton = eventoSexo.getStateChange();
-				
-				if (stateButton == ItemEvent.SELECTED) {
+				if (eventoSexo.getStateChange() == ItemEvent.SELECTED) {
 					
 					String sexoSel = ((JMenuItem)eventoSexo.getSource()).getText();
 					

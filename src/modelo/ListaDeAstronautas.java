@@ -1,6 +1,7 @@
 package modelo;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 
 import javax.swing.DefaultListModel;
@@ -16,7 +17,7 @@ public class ListaDeAstronautas extends JList<Astronauta>{
 		this.modelAstro = modelAstro;
 	}
 
-	public ListaDeAstronautas(ArrayList<Astronauta> astronautas) {
+	public ListaDeAstronautas(Collection<Astronauta> astronautas) {
 		inicializa(astronautas);
 	}
 
@@ -31,13 +32,14 @@ public class ListaDeAstronautas extends JList<Astronauta>{
 	@Override
 	public String toString() {
 		StringBuilder sbLista = new StringBuilder("[");
-		
+		//for (Astronauta a : astronautas)
+		sbLista.append("] \n");
 		return sbLista.toString();
 	}
 	
-	public void inicializa(ArrayList<Astronauta> astros){
+	public void inicializa(Collection<Astronauta> astronautas){
 		modelAstro 	= new DefaultListModel<>();
-		for (Astronauta a : astros){
+		for (Astronauta a : astronautas){
 			modelAstro.addElement(a);
 		}
 		
@@ -46,54 +48,53 @@ public class ListaDeAstronautas extends JList<Astronauta>{
 		
 	}
 
-	public void atualiza(ArrayList<Astronauta> astros, String sexo, String pais){
+	public void atualiza(Collection<Astronauta> astros, String sexo, String pais){
 	
 		DefaultListModel<Astronauta> modelAstroConsulta = new DefaultListModel<Astronauta>();
 		
 		switch(pais){
-							case "ALL":	switch(sexo){
-															case "ALL": {
-																for (Astronauta a : astros) {
-																	modelAstroConsulta.addElement(a);
-																	};
-																break;
-																}
-															
-															default: {
-																for (Astronauta a : astros) {
-															
-																if (a.getSexo().equals(sexo)){
-																	modelAstroConsulta.addElement(a);
-																	}
-																}
-																break;
-															}
-															
-															
+				case "ALL":	switch(sexo){
+								case "ALL": {
+									for (Astronauta a : astros) {
+										modelAstroConsulta.addElement(a);
+										};
+									break;
+									}
+								
+								default: {
+									for (Astronauta a : astros) {
+								
+									if (a.getSexo().equals(sexo)){
+										modelAstroConsulta.addElement(a);
 										}
-							
-										break;
-							
-							default:	switch(sexo){
-															case "ALL": {
-																for (Astronauta a : astros) {
-																	if (a.getPais_Nasc().equals(pais)){
-																		modelAstroConsulta.addElement(a);
-																	}
-																}
-																break;
-															}
-															
-															default: {
-																for (Astronauta a : astros){
-																	if (a.getPais_Nasc().equals(pais) && (a.getSexo().equals(sexo))){
-																		modelAstroConsulta.addElement(a);
-																	}
-																}
-																break;
-															}
+									}
+									break;
+								}
+												
+												
+							}			
+							break;
+				
+				default:	switch(sexo){
+								case "ALL": {
+									for (Astronauta a : astros) {
+										if (a.getPais_Nasc().equals(pais)){
+											modelAstroConsulta.addElement(a);
 										}
-										break;
+									}
+									break;
+								}
+								
+								default: {
+									for (Astronauta a : astros){
+										if (a.getPais_Nasc().equals(pais) && (a.getSexo().equals(sexo))){
+											modelAstroConsulta.addElement(a);
+										}
+									}
+									break;
+								}
+							}
+							break;
 		}
 		
 		setModel(modelAstroConsulta);
