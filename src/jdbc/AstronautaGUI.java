@@ -76,8 +76,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 	      "Colar","paste16.gif","o", 
 	      null, null, null,
 	      "Excluir","delete16.gif","x", 
-	      "Selecionar tudo","blank16.gif","t",
-	      null, null, null};
+	      "Selecionar tudo","blank16.gif","t"};
 	
 	private static String sBanco[] = {
 	      "Exportar","database-export.png","E", 
@@ -102,13 +101,17 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		   								"Canadá","CAN.png","d",
 		   								"Itália", "ITA.png","I",
 		   								"Brasil","BRA.png","B",
+		   								"Hungria","HUN.png","H",
+		   								"Romênia","ROU.png","o",
+		   								"Polônia","POL.png","P",
 		   								"Bélgica", "BEL.png", "L",
-		   								"Áustria", "AUT.png", "u",
+		   								"Cuba","CUB.png","b",
+		   								"Áustria", "AUT.png","u",
 		   								"Índia", "IND.png", "n",
 		   								"Rep. Checa","CZE.png","h"
 		   								}; 
 	
-	private static String sTipo[] = {
+	private static String sGrupo[] = {
 										" Todos","globe-green.png","o",
 										" Astronautas","hamburger.png","A",
 										" Cosmonautas","wall.png", "C",
@@ -209,7 +212,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 	      MenuHandler mh = new MenuHandler();
 	      MenuSexoHandler mrh = new MenuSexoHandler();
 	      MenuPaisHandler mcbh = new MenuPaisHandler();
-	      MenuTipoHandler mth = new MenuTipoHandler();
+	      MenuGrupoHandler mth = new MenuGrupoHandler();
 	      
 	      MenuBuilder.imagePrefix = "./imagens/vetor/";
 	      mb.add(MenuBuilder.newMenu("Arquivo", 'A', sArquivo, mh));
@@ -220,6 +223,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 			      JMenuItem miMissao = new JMenuItem("Missão");
 			      miMissao.setIcon(new ImageIcon("./imagens/vetor/Space-Shuttle-icon.png"));
 			      JMenuItem miDataNasc = new JMenuItem("Data de Nascimento");
+			      miDataNasc.setIcon(new ImageIcon("./imagens/vetor/calendar-day.png"));
 			      JMenuItem miOrdena = new JMenuItem("Ordena seleção por...");
 			      miOrdena.setIcon(new ImageIcon("./imagens/vetor/sort-alphabet.png"));
 			      JMenuItem miAtualiza = new JMenuItem("Atualiza");
@@ -230,9 +234,9 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 					      menuSexo.setIcon(new ImageIcon("./imagens/vetor/gender.png"));
 						      JRadioButtonMenuItem miAmbos = new JRadioButtonMenuItem("Ambos", true);
 						      miAmbos.setIcon(new ImageIcon("./imagens/vetor/toilet.png"));
-						      JRadioButtonMenuItem miMale = new JRadioButtonMenuItem("Masculino", false);
+						      JRadioButtonMenuItem miMale = new JRadioButtonMenuItem("Homens", false);
 						      miMale.setIcon(new ImageIcon("./imagens/vetor/toilet-male.png"));
-						      JRadioButtonMenuItem miFemale = new JRadioButtonMenuItem("Feminino", false);
+						      JRadioButtonMenuItem miFemale = new JRadioButtonMenuItem("Mulheres", false);
 						      miFemale.setIcon(new ImageIcon("./imagens/vetor/toilet-female.png"));
 						      
 						      miAmbos.addItemListener(mrh);
@@ -248,12 +252,12 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 						  menuPais.setIcon(new ImageIcon(MenuBuilder.imagePrefix + "_united-nations.png"));
 						  
 						  MenuBuilder.imagePrefix = "./imagens/vetor/";
-						  JMenu menuTipo = MenuBuilder.newRadioButtonMenu("Tipo", 'T', sTipo, mth);
-						  menuTipo.setIcon(new ImageIcon(MenuBuilder.imagePrefix + "binocular.png"));
+						  JMenu menuGrupo = MenuBuilder.newRadioButtonMenu("Grupo", 'G', sGrupo, mth);
+						  menuGrupo.setIcon(new ImageIcon(MenuBuilder.imagePrefix + "block.png"));
 						      
 				      menuConsulta.add(menuPais);
 				      menuConsulta.add(menuSexo);
-				      menuConsulta.add(menuTipo);
+				      menuConsulta.add(menuGrupo);
 				      menuConsulta.add(miMissao);
 				      menuConsulta.add(miDataNasc);
 				      menuConsulta.addSeparator();
@@ -263,7 +267,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 				      menuConsulta.setMnemonic('C');
 			      mb.add(menuConsulta);
 	      
-	      mb.add(MenuBuilder.newMenu("Ajuda", 'u', sAjuda, mh));
+	      mb.add(MenuBuilder.newMenu("Ajuda", 'j', sAjuda, mh));
 	      setJMenuBar(mb); //JMenu menu = mb.getMenu(1);
 	
 	}
@@ -340,7 +344,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		}	catch (SQLException e){
 			JOptionPane.showMessageDialog(null, 
 					"Não foi possível estabelecer conexão remota. Pressione OK para tentar conexão local...", 
-					"Erro", JOptionPane.ERROR_MESSAGE);
+					"Erro", JOptionPane.ERROR_MESSAGE, new ImageIcon("./imagens/vetor/scary.png") );
 			try (Connection con = AstronautaDB.getLocalConnection()){
 				importaBD(con);
 			}
@@ -498,7 +502,8 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		        			 AstronautaGUI.this, 
 		        			 "(C) Erasmo Leite Jr 2015 - eleitejr@gmail.com", 
 		        			 "Astronaut Database", 
-		        			 JOptionPane.INFORMATION_MESSAGE);
+		        			 JOptionPane.INFORMATION_MESSAGE,
+		        			 new ImageIcon("./imagens/vetor/mike.png"));
 		         }
 		         
 		         if (acao.equals("Atualiza")){
@@ -548,8 +553,8 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 					switch(sexoSel) {
 					
 						case "Ambos" : default	:	{setStrSexo("ALL"); 	break;}
-						case "Masculino" 		:	{setStrSexo("M");	 	break;}
-						case "Feminino" 		:	{setStrSexo("F");	 	break;}
+						case "Homens" 		:	{setStrSexo("M");	 	break;}
+						case "Mulheres" 		:	{setStrSexo("F");	 	break;}
 					}	
 					
 					System.out.println("atualizando ----------------------------------------->");
@@ -562,7 +567,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 			}
 	   }
 	   
-	   private class MenuTipoHandler implements ItemListener {
+	   private class MenuGrupoHandler implements ItemListener {
 
 			@Override
 			public void itemStateChanged(ItemEvent eventoTipo) {
