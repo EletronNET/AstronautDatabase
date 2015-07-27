@@ -99,15 +99,15 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		   								"Alemanha","DEU.png","A",
 		   								"França","FRA.png","F",
 		   								"Canadá","CAN.png","d",
-		   								"Itália", "ITA.png","I",
+		   								"Itália","ITA.png","I",
 		   								"Brasil","BRA.png","B",
 		   								"Hungria","HUN.png","H",
 		   								"Romênia","ROU.png","o",
 		   								"Polônia","POL.png","P",
-		   								"Bélgica", "BEL.png", "L",
+		   								"Bélgica","BEL.png", "L",
 		   								"Cuba","CUB.png","b",
-		   								"Áustria", "AUT.png","u",
-		   								"Índia", "IND.png", "n",
+		   								"Áustria","AUT.png","u",
+		   								"Índia","IND.png", "n",
 		   								"Rep. Checa","CZE.png","h"
 		   								}; 
 	
@@ -406,7 +406,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 	public void valueChanged(ListSelectionEvent e) {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd MMMMM yyyy");
-		Astronauta selecionado;
+		Astronauta selecionado=null;
 		
 		int i = getListaDeAstronautas().getSelectedIndex();
 		if (i == -1) {
