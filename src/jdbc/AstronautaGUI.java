@@ -107,6 +107,14 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		   								"Índia", "IND.png", "n",
 		   								"Rep. Checa","CZE.png","h"
 		   								}; 
+	
+	private static String sTipo[] = {
+										" Todos","globe-green.png","o",
+										" Astronautas","hamburger.png","A",
+										" Cosmonautas","wall.png", "C",
+										" Taikonautas","yin-yang.png","k",
+										" Turistas Espaciais","money-bag-dollar.png","T"
+									};
 	   
 	private static String sAjuda[] = {
 	      "Ajuda","help16.gif","A", null, null, null,
@@ -201,6 +209,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 	      MenuHandler mh = new MenuHandler();
 	      MenuSexoHandler mrh = new MenuSexoHandler();
 	      MenuPaisHandler mcbh = new MenuPaisHandler();
+	      MenuTipoHandler mth = new MenuTipoHandler();
 	      
 	      MenuBuilder.imagePrefix = "./imagens/vetor/";
 	      mb.add(MenuBuilder.newMenu("Arquivo", 'A', sArquivo, mh));
@@ -215,7 +224,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 			      miOrdena.setIcon(new ImageIcon("./imagens/vetor/sort-alphabet.png"));
 			      JMenuItem miAtualiza = new JMenuItem("Atualiza");
 			      miAtualiza.addActionListener(mh);
-			      miAtualiza.setIcon(new ImageIcon("./imagens/vetor/database-sql.png"));
+			      miAtualiza.setIcon(new ImageIcon("./imagens/vetor/arrow-circle.png"));
 			      
 				   JMenu menuSexo = new JMenu("Sexo");
 					      menuSexo.setIcon(new ImageIcon("./imagens/vetor/gender.png"));
@@ -237,9 +246,14 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 						  MenuBuilder.imagePrefix = "./imagens/flags/";
 						  JMenu menuPais = MenuBuilder.newRadioButtonMenu("Pais", 'P', sPais, mcbh);
 						  menuPais.setIcon(new ImageIcon(MenuBuilder.imagePrefix + "_united-nations.png"));
+						  
+						  MenuBuilder.imagePrefix = "./imagens/vetor/";
+						  JMenu menuTipo = MenuBuilder.newRadioButtonMenu("Tipo", 'T', sTipo, mth);
+						  menuTipo.setIcon(new ImageIcon(MenuBuilder.imagePrefix + "binocular.png"));
 						      
 				      menuConsulta.add(menuPais);
 				      menuConsulta.add(menuSexo);
+				      menuConsulta.add(menuTipo);
 				      menuConsulta.add(miMissao);
 				      menuConsulta.add(miDataNasc);
 				      menuConsulta.addSeparator();
@@ -408,7 +422,6 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		String cidade = selecionado.getCidade_Nasc() + "\n";
 		String dataNasc = (sdf.format(selecionado.getDtNasc()) + "\n");
 		Date dataFalec = selecionado.getDtFalec();
-		String strDataFalec = dataFalec.toString();
 		
 		sb.append("NOME: \t" + nome	);
 		sb.append("PAIS: \t"  + pais );
@@ -416,9 +429,8 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		sb.append("CIDADE: \t" + cidade );
 		sb.append("NASCEU: \t" + dataNasc);
 
-		if (!(strDataFalec.equals("2100-01-01")) && !(strDataFalec.isEmpty())) 
-			{
-				sb.append("FALECEU: \t" + (sdf.format(dataFalec) + "\n"));
+		if (dataFalec != null) {
+			sb.append("FALECEU: \t" + (sdf.format(dataFalec) + "\n"));
 		}
 		
 		sb.append("SEXO: \t" + (selecionado.getSexo().charAt(0) == 'M' ? "masculino" : "feminino") + "\n\n");
@@ -439,7 +451,6 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 			} catch (IOException eio){}
 		
 		BufferedImage imagem = formataImagem(img, larguraJanela, alturaJanela);
-		
 		
 		label.setBorder(BorderFactory.createLineBorder(Color.BLACK));  
 		label.setSize(larguraJanela, alturaJanela);
@@ -545,6 +556,35 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 	         		listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
 	         		System.out.println("Filtro [SEXO = " + getStrSexo() + "] aplicado com sucesso-------> " 
 	         				+ getListaDeAstronautas().getModel().getSize() + " registros encontrados.");
+	         		//mostraStatusListaAstro();
+	         		
+				}
+			}
+	   }
+	   
+	   private class MenuTipoHandler implements ItemListener {
+
+			@Override
+			public void itemStateChanged(ItemEvent eventoTipo) {
+				
+				if (eventoTipo.getStateChange() == ItemEvent.SELECTED) {
+					
+					String tipoSel = ((JMenuItem)eventoTipo.getSource()).getText().substring(1, 2);
+					
+					switch(tipoSel) {
+					
+						case "A" : default	:	
+						case "C" 		:	
+						case "k" 		:	
+						case "T"		:	{break;}
+					}	
+					/*
+					 * TODO: criar método para consulta
+					 */
+					//System.out.println("atualizando ----------------------------------------->");
+	         		//listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
+	         		//System.out.println("Filtro [SEXO = " + getStrSexo() + "] aplicado com sucesso-------> " 
+	         		//		+ getListaDeAstronautas().getModel().getSize() + " registros encontrados.");
 	         		//mostraStatusListaAstro();
 	         		
 				}
