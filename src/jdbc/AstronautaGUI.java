@@ -109,7 +109,8 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		   								"Áustria","AUT.png","u",
 		   								"Índia","IND.png", "n",
 		   								"Rep. Checa","CZE.png","h",
-		   								"Bulgária","BGR.png","i"
+		   								"Bulgária","BGR.png","i",
+		   								"África do Sul","ZAF.png","f"
 		   								}; 
 	
 	private static String sGrupo[] = {
@@ -564,7 +565,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 			public void mostraMsgOperNaoImplementada() throws HeadlessException {
 				JOptionPane.showMessageDialog(
 						 AstronautaGUI.this, 
-						 "Desculpe! Vou ficar te devendo essa...", 
+						 "Huh... Não entendi... Vou ficar te devendo essa...", 
 						 "Alerta", 
 						 JOptionPane.INFORMATION_MESSAGE,
 						 new ImageIcon("./imagens/vetor/scary.png"));
