@@ -62,17 +62,17 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 
 	private static String sArquivo[] = {
 	      "Novo","new16.gif","N", 
-	      "Abrir ...","open16.gif","A",
-	      "Salvar","save16.gif","S", 
-	      "Salvar como ...","saveas16.gif","c",
+	      "Abrir ...","open16new.png","A",
+	      "Salvar","save16new.png","S", 
+	      "Salvar como ...","saveas16new.png","c",
 	      null, null, null, 
-	      "Imprimir ...","print16.gif","I", 
+	      "Imprimir ...","print16new.png","I", 
 	      null, null, null, 
-	      "Sair","blank16.gif","r"};
+	      "Sair","exit16new.png","r"};
 	
 	private static String sEditar[] = {
-	      "Recortar","cut16.gif","R", 
-	      "Copiar","copy16.gif","C",
+	      "Recortar","cut16.png","R", 
+	      "Copiar","copy16new.png","C",
 	      "Colar","paste16.gif","o", 
 	      null, null, null,
 	      "Excluir","delete16.gif","x", 
@@ -122,16 +122,16 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 									};
 	
 	private static String sOrdenar[] = {
-		" Sobrenome","globe-green.png","n",
-		" Data de Nascimento","hamburger.png","D",
-		" Número de Missões","wall.png", "M",
-		" Cidade de Nascimento","yin-yang.png","C",
-		" Tempo no Espaço","money-bag-dollar.png","ç"
+		" Sobrenome","address-book.png","n",
+		" Data de Nascimento","calendar-day.png","D",
+		" Número de Missões","counter.png", "M",
+		" Cidade de Nascimento","building-hedge.png","C",
+		" Tempo no Espaço","alarm-clock.png","ç"
 	};
 	   
 	private static String sAjuda[] = {
-	      "Ajuda","help16.gif","A", null, null, null,
-	      "Sobre ...","about16.gif","S"};
+	      "Ajuda","help16new.png","A", null, null, null,
+	      "Sobre ...","about16new.png","S"};
 	
 	private String 	strSexo = "ALL", 
 					strMissao = "ALL", 
@@ -234,6 +234,8 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 			      miMissao.setIcon(new ImageIcon("./imagens/vetor/Space-Shuttle-icon.png"));
 			      JMenuItem miDataNasc = new JMenuItem("Data de Nascimento");
 			      miDataNasc.setIcon(new ImageIcon("./imagens/vetor/calendar-day.png"));
+			      JMenuItem miNome = new JMenuItem("Parte do Nome");
+			      miNome.setIcon(new ImageIcon("./imagens/vetor/document-attribute.png"));
 			      JMenuItem miOrdena = new JMenuItem("Ordena seleção por...");
 			      miOrdena.setIcon(new ImageIcon("./imagens/vetor/sort-alphabet.png"));
 			      JMenuItem miAtualiza = new JMenuItem("Atualiza");
@@ -273,6 +275,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 				      menuConsulta.add(menuGrupo);
 				      menuConsulta.add(miMissao);
 				      menuConsulta.add(miDataNasc);
+				      menuConsulta.add(miNome);
 				      menuConsulta.addSeparator();
 				      menuConsulta.add(menuOrdenar);
 				      menuConsulta.addSeparator();
