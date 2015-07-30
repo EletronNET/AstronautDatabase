@@ -245,11 +245,11 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 				   JMenu menuSexo = new JMenu("Sexo");
 					      menuSexo.setIcon(new ImageIcon("./imagens/vetor/gender.png"));
 						      JRadioButtonMenuItem miAmbos = new JRadioButtonMenuItem("Ambos", true);
-						      miAmbos.setIcon(new ImageIcon("./imagens/vetor/toilet.png"));
+						      miAmbos.setIcon(new ImageIcon("./imagens/vetor/users.png"));
 						      JRadioButtonMenuItem miMale = new JRadioButtonMenuItem("Homens", false);
-						      miMale.setIcon(new ImageIcon("./imagens/vetor/toilet-male.png"));
+						      miMale.setIcon(new ImageIcon("./imagens/vetor/user.png"));
 						      JRadioButtonMenuItem miFemale = new JRadioButtonMenuItem("Mulheres", false);
-						      miFemale.setIcon(new ImageIcon("./imagens/vetor/toilet-female.png"));
+						      miFemale.setIcon(new ImageIcon("./imagens/vetor/user-female.png"));
 						      
 						      miAmbos.addItemListener(mrh);
 						      miMale.addItemListener(mrh);
@@ -261,7 +261,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 						  
 						  MenuBuilder.imagePrefix = "./imagens/flags/";
 						  JMenu menuPais = MenuBuilder.newRadioButtonMenu("Pais", 'P', sPais, mcbh);
-						  menuPais.setIcon(new ImageIcon(MenuBuilder.imagePrefix + "_united-nations.png"));
+						  menuPais.setIcon(new ImageIcon(MenuBuilder.imagePrefix + "map.png"));
 						  
 						  MenuBuilder.imagePrefix = "./imagens/vetor/";
 						  JMenu menuGrupo = MenuBuilder.newRadioButtonMenu("Grupo", 'G', sGrupo, mth);
