@@ -1,3 +1,4 @@
 # AstronautDatabase
 
-Test project for an astronaut database... still very poor.
+Test project for an astronaut database... yet very poor.
+Trying to learn Java...

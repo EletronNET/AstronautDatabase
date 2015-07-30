@@ -44,6 +44,8 @@ public class ListaDeAstronautas extends JList<Astronauta>{
 		
 		setModel(modelAstro);
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		setSelectedIndex(0);
+		ensureIndexIsVisible(0);
 		
 	}
 
