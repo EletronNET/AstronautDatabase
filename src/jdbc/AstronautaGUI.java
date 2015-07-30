@@ -81,7 +81,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 	private static String sBanco[] = {
 	      "Exportar","database-export.png","E", 
 	      "Importar","database-import.png","m",
-	      "Nuvem","database-cloud.png","u", 
+	      "Nuvem","database-cloud.png","v", 
 	      "Rede","database-network.png","R",
 	      null, null, null, 
 	      "Estatísticas","database-property.png","s", 
@@ -108,7 +108,9 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		   								"Cuba","CUB.png","b",
 		   								"Áustria","AUT.png","u",
 		   								"Índia","IND.png", "n",
-		   								"Rep. Checa","CZE.png","h"
+		   								"Rep. Checa","CZE.png","h",
+		   								"Bulgária","BGR.png","i",
+		   								"África do Sul","ZAF.png","f"
 		   								}; 
 	
 	private static String sGrupo[] = {
@@ -118,6 +120,14 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 										" Taikonautas","yin-yang.png","k",
 										" Turistas Espaciais","money-bag-dollar.png","T"
 									};
+	
+	private static String sOrdenar[] = {
+		" Sobrenome","globe-green.png","n",
+		" Data de Nascimento","hamburger.png","D",
+		" Número de Missões","wall.png", "M",
+		" Cidade de Nascimento","yin-yang.png","C",
+		" Tempo no Espaço","money-bag-dollar.png","ç"
+	};
 	   
 	private static String sAjuda[] = {
 	      "Ajuda","help16.gif","A", null, null, null,
@@ -254,6 +264,9 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 						  MenuBuilder.imagePrefix = "./imagens/vetor/";
 						  JMenu menuGrupo = MenuBuilder.newRadioButtonMenu("Grupo", 'G', sGrupo, mth);
 						  menuGrupo.setIcon(new ImageIcon(MenuBuilder.imagePrefix + "block.png"));
+						  
+						  JMenu menuOrdenar = MenuBuilder.newMenu("Ordenar seleção por...", 'O', sOrdenar, mh);
+						  menuOrdenar.setIcon(new ImageIcon(MenuBuilder.imagePrefix + "sort-alphabet.png"));
 						      
 				      menuConsulta.add(menuPais);
 				      menuConsulta.add(menuSexo);
@@ -261,7 +274,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 				      menuConsulta.add(miMissao);
 				      menuConsulta.add(miDataNasc);
 				      menuConsulta.addSeparator();
-				      menuConsulta.add(miOrdena);
+				      menuConsulta.add(menuOrdenar);
 				      menuConsulta.addSeparator();
 				      menuConsulta.add(miAtualiza);
 				      menuConsulta.setMnemonic('C');
@@ -498,12 +511,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		         
 		         if (acao.equals("Sobre ...")){
 		        	 
-		        	 JOptionPane.showMessageDialog(
-		        			 AstronautaGUI.this, 
-		        			 "(C) Erasmo Leite Jr 2015 - eleitejr@gmail.com", 
-		        			 "Astronaut Database", 
-		        			 JOptionPane.INFORMATION_MESSAGE,
-		        			 new ImageIcon("./imagens/vetor/mike.png"));
+		        	 mostraMsgSobre();
 		         }
 		         
 		         if (acao.equals("Atualiza")){
@@ -512,7 +520,56 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		         		System.out.println("Operação realizada com sucesso-------> " + getListaDeAstronautas().getModel().getSize() + " registros encontrados.");
 		         		mostraStatusListaAstro();
 		         	}
+		         
+		         if (acao.equals(sOrdenar[0*3])) {
+		        	 //TODO: implementar
+		        	 mostraMsgOperNaoImplementada();
+		        	 ;}
+		         
+		         if (acao.equals(sOrdenar[1*3])) {
+		        	 //TODO: implementar
+		        	 mostraMsgOperNaoImplementada();
+		        	 ;}
+		         
+		         if (acao.equals(sOrdenar[2*3])) {
+		        	 //TODO: implementar
+		        	 mostraMsgOperNaoImplementada();
+		        	 ;}
+		         
+		         if (acao.equals(sOrdenar[3*3])) {
+		        	 //TODO: implementar
+		        	 mostraMsgOperNaoImplementada();
+		        	 ;}
+		         
+		         if (acao.equals(sOrdenar[4*3])) {
+		        	 //TODO: implementar
+		        	 mostraMsgOperNaoImplementada();
+		        	 ;}
 		      }
+
+			/**
+			 * @throws HeadlessException
+			 */
+			public void mostraMsgSobre() throws HeadlessException {
+				JOptionPane.showMessageDialog(
+						 AstronautaGUI.this, 
+						 "(C) Erasmo Leite Jr 2015 - eleitejr@gmail.com", 
+						 "Astronaut Database", 
+						 JOptionPane.INFORMATION_MESSAGE,
+						 new ImageIcon("./imagens/vetor/mike.png"));
+			}
+
+			/**
+			 * @throws HeadlessException
+			 */
+			public void mostraMsgOperNaoImplementada() throws HeadlessException {
+				JOptionPane.showMessageDialog(
+						 AstronautaGUI.this, 
+						 "Huh... Não entendi... Vou ficar te devendo essa...", 
+						 "Alerta", 
+						 JOptionPane.INFORMATION_MESSAGE,
+						 new ImageIcon("./imagens/vetor/scary.png"));
+			}
 
 	   }
      		 
