@@ -556,10 +556,10 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 			public void mostraMsgSobre() throws HeadlessException {
 				JOptionPane.showMessageDialog(
 						 AstronautaGUI.this, 
-						 "(C) Erasmo Leite Jr 2015 - eleitejr@gmail.com", 
-						 "Astronaut Database", 
+						 "Special thanks to:\nSpacefacts - www.spacefacts.de\n	(C) Erasmo Leite Jr 2015 - eleitejr@gmail.com", 
+						 "The Astronaut Database", 
 						 JOptionPane.INFORMATION_MESSAGE,
-						 new ImageIcon("./imagens/vetor/mike.png"));
+						 new ImageIcon("./imagens/vetor/Astronaut-50.png"));
 			}
 
 			/**
@@ -613,7 +613,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 					switch(sexoSel) {
 					
 						case "Ambos" : default	:	{setStrSexo("ALL"); 	break;}
-						case "Homens" 		:	{setStrSexo("M");	 	break;}
+						case "Homens" 			:	{setStrSexo("M");	 	break;}
 						case "Mulheres" 		:	{setStrSexo("F");	 	break;}
 					}	
 					
