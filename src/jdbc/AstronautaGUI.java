@@ -17,7 +17,8 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -39,16 +40,19 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import modelo.Astronauta;
+import modelo.CidadeComparator;
+import modelo.DataNascComparator;
 import modelo.ListaDeAstronautas;
 import modelo.ListaDePaises;
 import modelo.Pais;
+import modelo.SobrenomeComparator;
 import dao.AstronautaDAO;
 
 @SuppressWarnings("serial")
 public class AstronautaGUI extends JFrame implements ListSelectionListener {
 
-	private static Collection<Astronauta> 	astronautas;
-	private static Collection<Pais> 		paises;	
+	private static ArrayList<Astronauta> 	astronautas;
+	private static ArrayList<Pais> 		paises;	
 	private ListaDeAstronautas 				listaDeAstronautas; 						// caixa de lista p/ escolha nome
 	private ListaDePaises					listaDePaises;								// caixa de lista p/ escolha pais	
 	private JTextArea 						taInfo; 									// areas de texto p/ info astronauta
@@ -139,19 +143,19 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 					strPais = "ALL",
 					strDataNasc = "ALL";
 	
-	public static Collection<Astronauta> getAstronautas() {
+	public static ArrayList<Astronauta> getAstronautas() {
 		return astronautas;
 	}
 
-	public static void setAstronautas(Collection<Astronauta> astronautas) {
+	public static void setAstronautas(ArrayList<Astronauta> astronautas) {
 		AstronautaGUI.astronautas = astronautas;
 	}
 	
-	public static Collection<Pais> getPaises() {
+	public static ArrayList<Pais> getPaises() {
 		return paises;
 	}
 
-	public static void setPaises(Collection<Pais> paises) {
+	public static void setPaises(ArrayList<Pais> paises) {
 		AstronautaGUI.paises = paises;
 	}
 
@@ -526,13 +530,15 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		         	}
 		         
 		         if (acao.equals(sOrdenar[0*3])) {
-		        	 //TODO: implementar
-		        	 mostraMsgOperNaoImplementada();
+		        	 SobrenomeComparator comparator = new SobrenomeComparator();
+		        	 Collections.sort(astronautas, comparator);
+		        	 listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
 		        	 ;}
 		         
 		         if (acao.equals(sOrdenar[1*3])) {
-		        	 //TODO: implementar
-		        	 mostraMsgOperNaoImplementada();
+		        	 DataNascComparator comparator = new DataNascComparator();
+		        	 Collections.sort(astronautas, comparator);
+		        	 listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
 		        	 ;}
 		         
 		         if (acao.equals(sOrdenar[2*3])) {
@@ -541,8 +547,9 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		        	 ;}
 		         
 		         if (acao.equals(sOrdenar[3*3])) {
-		        	 //TODO: implementar
-		        	 mostraMsgOperNaoImplementada();
+		        	 CidadeComparator comparator = new CidadeComparator();
+		        	 Collections.sort(astronautas, comparator);
+		        	 listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
 		        	 ;}
 		         
 		         if (acao.equals(sOrdenar[4*3])) {
