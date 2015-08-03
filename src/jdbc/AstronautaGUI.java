@@ -105,6 +105,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		   								"Romênia","ROU.png","o",
 		   								"Polônia","POL.png","P",
 		   								"Bélgica","BEL.png", "L",
+		   								"Coréia do Sul","KOR.png","K",
 		   								"Cuba","CUB.png","b",
 		   								"Áustria","AUT.png","u",
 		   								"Índia","IND.png", "n",
