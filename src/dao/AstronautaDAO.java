@@ -26,6 +26,7 @@ public class AstronautaDAO {
 	public void salva(Astronauta astronauta) throws SQLException {
 
 		String sql = "INSERT INTO astronauta("
+				+ "IdAstronauta, "
 				+ "Primeiro_Nome, "
 				+ "Nome_do_Meio, "
 				+ "Sobrenome, "
@@ -38,38 +39,33 @@ public class AstronautaDAO {
 				+ "Foto, "
 				+ "Info, "
 				+ "m1, m2, m3, m4, m5, m6, m7, m8) "
-				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-		try (PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+		try (PreparedStatement stmt = con.prepareStatement(sql)) {
 
-			stmt.setString(1, astronauta.getPrimeiro_Nome());
-			stmt.setString(2, astronauta.getNome_do_Meio());
-			stmt.setString(3, astronauta.getSobrenome());
-			stmt.setString(4, astronauta.getPais_Nasc());
-			stmt.setString(5, astronauta.getEstado_Nasc());
-			stmt.setString(6, astronauta.getCidade_Nasc());
-			stmt.setString(7, astronauta.getSexo());
-			stmt.setDate(8, astronauta.getDtNasc());
-			stmt.setDate(9, astronauta.getDtFalec());
-			stmt.setString(10, astronauta.getFoto());
-			stmt.setString(11, astronauta.getInfo());
+			stmt.setInt(1, astronauta.getIdAstronauta());
+			stmt.setString(2, astronauta.getPrimeiro_Nome());
+			stmt.setString(3, astronauta.getNome_do_Meio());
+			stmt.setString(4, astronauta.getSobrenome());
+			stmt.setString(5, astronauta.getPais_Nasc());
+			stmt.setString(6, astronauta.getEstado_Nasc());
+			stmt.setString(7, astronauta.getCidade_Nasc());
+			stmt.setString(8, astronauta.getSexo());
+			stmt.setDate(9, astronauta.getDtNasc());
+			stmt.setDate(10, astronauta.getDtFalec());
+			stmt.setString(11, astronauta.getFoto());
+			stmt.setString(12, astronauta.getInfo());
 
 			int numMissoes = astronauta.getMissao().size();
 			for (int k = 0; k < numMissoes; k++){
-				stmt.setString(12 + k, astronauta.getMissao().get(k));
+				stmt.setString(13 + k, astronauta.getMissao().get(k));
 			}
 			for (int k = numMissoes; k < 8; k++){
-				stmt.setString(12 + k, null);
+				stmt.setString(13 + k, null);
 			}
 
 			stmt.execute();
 
-			try (ResultSet rs = stmt.getGeneratedKeys()) {
-				if (rs.next()){
-					int id = rs.getInt(1);
-					astronauta.setIdAstronauta(id);
-				}
-			}
 		}
 	}
 
