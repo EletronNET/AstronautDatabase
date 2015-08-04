@@ -42,6 +42,7 @@ import javax.swing.event.ListSelectionListener;
 import modelo.Astronauta;
 import modelo.CidadeComparator;
 import modelo.DataNascComparator;
+import modelo.IdAstronautaComparator;
 import modelo.ListaDeAstronautas;
 import modelo.ListaDePaises;
 import modelo.Pais;
@@ -127,6 +128,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 									};
 	
 	private static String sOrdenar[] = {
+		" Ordem de Missão","Space-Shuttle-icon.png","s",
 		" Sobrenome","address-book.png","n",
 		" Data de Nascimento","calendar-day.png","D",
 		" Número de Missões","counter.png", "M",
@@ -528,31 +530,37 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		         		System.out.println("Operação realizada com sucesso-------> " + getListaDeAstronautas().getModel().getSize() + " registros encontrados.");
 		         		mostraStatusListaAstro();
 		         	}
-		         
+
 		         if (acao.equals(sOrdenar[0*3])) {
-		        	 SobrenomeComparator comparator = new SobrenomeComparator();
+		        	 IdAstronautaComparator comparator = new IdAstronautaComparator();
 		        	 Collections.sort(astronautas, comparator);
 		        	 listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
 		        	 ;}
 		         
 		         if (acao.equals(sOrdenar[1*3])) {
-		        	 DataNascComparator comparator = new DataNascComparator();
+		        	 SobrenomeComparator comparator = new SobrenomeComparator();
 		        	 Collections.sort(astronautas, comparator);
 		        	 listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
 		        	 ;}
 		         
 		         if (acao.equals(sOrdenar[2*3])) {
+		        	 DataNascComparator comparator = new DataNascComparator();
+		        	 Collections.sort(astronautas, comparator);
+		        	 listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
+		        	 ;}
+		         
+		         if (acao.equals(sOrdenar[3*3])) {
 		        	 //TODO: implementar
 		        	 mostraMsgOperNaoImplementada();
 		        	 ;}
 		         
-		         if (acao.equals(sOrdenar[3*3])) {
+		         if (acao.equals(sOrdenar[4*3])) {
 		        	 CidadeComparator comparator = new CidadeComparator();
 		        	 Collections.sort(astronautas, comparator);
 		        	 listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
 		        	 ;}
 		         
-		         if (acao.equals(sOrdenar[4*3])) {
+		         if (acao.equals(sOrdenar[5*3])) {
 		        	 //TODO: implementar
 		        	 mostraMsgOperNaoImplementada();
 		        	 ;}
