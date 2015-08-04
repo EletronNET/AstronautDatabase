@@ -160,7 +160,7 @@ public class Astronauta {
 	public void setMissao(List<String> missao) {
 		this.missao = missao;
 	}
-	
+
 	public Blob getImagem() {
 		return Imagem;
 	}

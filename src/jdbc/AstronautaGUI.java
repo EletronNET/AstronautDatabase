@@ -45,6 +45,7 @@ import modelo.DataNascComparator;
 import modelo.IdAstronautaComparator;
 import modelo.ListaDeAstronautas;
 import modelo.ListaDePaises;
+import modelo.MissoesComparator;
 import modelo.Pais;
 import modelo.SobrenomeComparator;
 import dao.AstronautaDAO;
@@ -550,8 +551,9 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		        	 ;}
 		         
 		         if (acao.equals(sOrdenar[3*3])) {
-		        	 //TODO: implementar
-		        	 mostraMsgOperNaoImplementada();
+		        	 MissoesComparator comparator = new MissoesComparator();
+		        	 Collections.sort(astronautas, comparator);
+		        	 listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
 		        	 ;}
 		         
 		         if (acao.equals(sOrdenar[4*3])) {
@@ -572,7 +574,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 			public void mostraMsgSobre() throws HeadlessException {
 				JOptionPane.showMessageDialog(
 						 AstronautaGUI.this, 
-						 "Special thanks to:\nSpacefacts - www.spacefacts.de\n	(C) Erasmo Leite Jr 2015 - eleitejr@gmail.com", 
+						 "Special thanks to:\n* Spacefacts - www.spacefacts.de\n	(C) Erasmo Leite Jr 2015 - eleitejr@gmail.com", 
 						 "The Astronaut Database", 
 						 JOptionPane.INFORMATION_MESSAGE,
 						 new ImageIcon("./imagens/vetor/Astronaut-50.png"));
