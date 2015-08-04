@@ -23,6 +23,7 @@ import java.util.Collections;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -54,7 +55,7 @@ import dao.AstronautaDAO;
 public class AstronautaGUI extends JFrame implements ListSelectionListener {
 
 	private static ArrayList<Astronauta> 	astronautas;
-	private static ArrayList<Pais> 		paises;	
+	private static ArrayList<Pais> 			paises;	
 	private ListaDeAstronautas 				listaDeAstronautas; 						// caixa de lista p/ escolha nome
 	private ListaDePaises					listaDePaises;								// caixa de lista p/ escolha pais	
 	private JTextArea 						taInfo; 									// areas de texto p/ info astronauta
@@ -214,7 +215,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 	 *  Construtor
 	 */
 	public AstronautaGUI() throws SQLException, IOException {
-		super("Astronaut Database"); // ajusta titulo
+		super("The Astronaut Database"); // ajusta titulo
 	    setIconImage(new ImageIcon("./imagens/vetor/astronaut-icon.png").getImage());  
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // acao fechar
 	    
@@ -244,6 +245,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 			      miDataNasc.setIcon(new ImageIcon("./imagens/vetor/calendar-day.png"));
 			      JMenuItem miNome = new JMenuItem("Parte do Nome");
 			      miNome.setIcon(new ImageIcon("./imagens/vetor/document-attribute.png"));
+			      miNome.addActionListener(mh);
 			      JMenuItem miOrdena = new JMenuItem("Ordena seleção por...");
 			      miOrdena.setIcon(new ImageIcon("./imagens/vetor/sort-alphabet.png"));
 			      JMenuItem miAtualiza = new JMenuItem("Atualiza");
@@ -520,6 +522,30 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		        	 // TODO
 		         }
 		         
+		         // Filtro = parte do nome
+		         if (acao.equals("Parte do Nome")) {
+		        	 String parteDoNome = ((String) JOptionPane.showInputDialog(
+		        			 AstronautaGUI.this, 
+		        			 "Digite parte do nome:", 
+		        			 "Filtrar Resultados",
+		        			 JFrame.EXIT_ON_CLOSE,
+		        			 new ImageIcon("./imagens/vetor/astronaut-icon.png"), 
+		        			 null, 
+		        			 null)).toLowerCase();
+		        	 
+		        	 DefaultListModel<Astronauta> modelAstroConsulta = new DefaultListModel<Astronauta>();
+		        	 for (Astronauta astronauta : astronautas) {
+						if (astronauta.getPrimeiro_Nome().toLowerCase().contains(parteDoNome) 
+								|| (astronauta.getNome_do_Meio().toLowerCase().contains(parteDoNome) 
+										|| (astronauta.getSobrenome().toLowerCase().contains(parteDoNome)))){
+											modelAstroConsulta.addElement(astronauta);
+						}
+					}
+		        	 listaDeAstronautas.setModel(modelAstroConsulta);
+		        	 listaDeAstronautas.setSelectedIndex(0);
+		        	 listaDeAstronautas.ensureIndexIsVisible(0);
+		         }
+		         
 		         if (acao.equals("Sobre ...")){
 		        	 
 		        	 mostraMsgSobre();
@@ -532,36 +558,42 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		         		mostraStatusListaAstro();
 		         	}
 
+		         // Ordenar por IdAstronauta = ordem de missão ao espaço
 		         if (acao.equals(sOrdenar[0*3])) {
 		        	 IdAstronautaComparator comparator = new IdAstronautaComparator();
 		        	 Collections.sort(astronautas, comparator);
 		        	 listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
 		        	 ;}
 		         
+		         // Ordenar por sobrenome
 		         if (acao.equals(sOrdenar[1*3])) {
 		        	 SobrenomeComparator comparator = new SobrenomeComparator();
 		        	 Collections.sort(astronautas, comparator);
 		        	 listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
 		        	 ;}
 		         
+		         // Ordenar por data de nascimento
 		         if (acao.equals(sOrdenar[2*3])) {
 		        	 DataNascComparator comparator = new DataNascComparator();
 		        	 Collections.sort(astronautas, comparator);
 		        	 listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
 		        	 ;}
 		         
+		         // Ordenar por número de missões
 		         if (acao.equals(sOrdenar[3*3])) {
 		        	 MissoesComparator comparator = new MissoesComparator();
 		        	 Collections.sort(astronautas, comparator);
 		        	 listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
 		        	 ;}
 		         
+		         // Ordenar por cidade de nascimento
 		         if (acao.equals(sOrdenar[4*3])) {
 		        	 CidadeComparator comparator = new CidadeComparator();
 		        	 Collections.sort(astronautas, comparator);
 		        	 listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
 		        	 ;}
 		         
+		         // Ordenar por tempo no espaço
 		         if (acao.equals(sOrdenar[5*3])) {
 		        	 //TODO: implementar
 		        	 mostraMsgOperNaoImplementada();
@@ -644,6 +676,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 				}
 			}
 	   }
+	   
 	   
 	   private class MenuGrupoHandler implements ItemListener {
 
