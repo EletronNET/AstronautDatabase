@@ -19,6 +19,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -215,7 +216,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 	 *  Construtor
 	 */
 	public AstronautaGUI() throws SQLException, IOException {
-		super("The Astronaut Database"); // ajusta titulo
+		super("Viajantes Espaciais - The Astronaut & Cosmonaut Database"); // ajusta titulo
 	    setIconImage(new ImageIcon("./imagens/vetor/astronaut-icon.png").getImage());  
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // acao fechar
 	    
@@ -238,9 +239,10 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 	      mb.add(MenuBuilder.newMenu("Editar", 'E', sEditar, mh));
 	      mb.add(MenuBuilder.newMenu("Banco de Dados", 'B', sBanco, mh));
 	      
-	      JMenu menuConsulta = new JMenu("Consulta"); 
+	      JMenu menuFiltrar = new JMenu("Filtrar"); 
 			      JMenuItem miMissao = new JMenuItem("Missão");
 			      miMissao.setIcon(new ImageIcon("./imagens/vetor/Space-Shuttle-icon.png"));
+			      miMissao.addActionListener(mh);
 			      JMenuItem miDataNasc = new JMenuItem("Data de Nascimento");
 			      miDataNasc.setIcon(new ImageIcon("./imagens/vetor/calendar-day.png"));
 			      JMenuItem miNome = new JMenuItem("Parte do Nome");
@@ -280,18 +282,18 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 						  JMenu menuOrdenar = MenuBuilder.newMenu("Ordenar seleção por...", 'O', sOrdenar, mh);
 						  menuOrdenar.setIcon(new ImageIcon(MenuBuilder.imagePrefix + "sort-alphabet.png"));
 						      
-				      menuConsulta.add(menuPais);
-				      menuConsulta.add(menuSexo);
-				      menuConsulta.add(menuGrupo);
-				      menuConsulta.add(miMissao);
-				      menuConsulta.add(miDataNasc);
-				      menuConsulta.add(miNome);
-				      menuConsulta.addSeparator();
-				      menuConsulta.add(menuOrdenar);
-				      menuConsulta.addSeparator();
-				      menuConsulta.add(miAtualiza);
-				      menuConsulta.setMnemonic('C');
-			      mb.add(menuConsulta);
+				      menuFiltrar.add(menuPais);
+				      menuFiltrar.add(menuSexo);
+				      menuFiltrar.add(menuGrupo);
+				      menuFiltrar.add(miMissao);
+				      menuFiltrar.add(miDataNasc);
+				      menuFiltrar.add(miNome);
+				      menuFiltrar.addSeparator();
+				      menuFiltrar.add(menuOrdenar);
+				      menuFiltrar.addSeparator();
+				      menuFiltrar.add(miAtualiza);
+				      menuFiltrar.setMnemonic('F');
+			      mb.add(menuFiltrar);
 	      
 	      mb.add(MenuBuilder.newMenu("Ajuda", 'j', sAjuda, mh));
 	      setJMenuBar(mb); //JMenu menu = mb.getMenu(1);
@@ -518,32 +520,112 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		         
 		         if (acao.equals(sArquivo[7*3])) {System.exit(0);}
 		         
-		         if (acao.equals("Estatísticas")){
-		        	 // TODO
+		         // Banco de Dados - Exportar
+		         if (acao.equals(sBanco[0*3])){
+		        	//TODO: implementar
+		        	 mostraMsgOperNaoImplementada();
 		         }
 		         
-		         // Filtro = parte do nome
-		         if (acao.equals("Parte do Nome")) {
-		        	 String parteDoNome = ((String) JOptionPane.showInputDialog(
+		         // Banco de Dados - Importar
+		         if (acao.equals(sBanco[1*3])){
+			        	//TODO: implementar
+			        	 mostraMsgOperNaoImplementada();
+			         }
+		         
+		         // Banco de Dados - Nuvem
+		         if (acao.equals(sBanco[2*3])){
+			        	//TODO: implementar
+			        	 mostraMsgOperNaoImplementada();
+			         }
+		         
+		         // Banco de Dados - Rede
+		         if (acao.equals(sBanco[3*3])){
+			        	//TODO: implementar
+			        	 mostraMsgOperNaoImplementada();
+			         }
+		         
+		         // Banco de Dados - Estatísticas
+		         if (acao.equals(sBanco[5*3])){
+			        	//TODO: implementar
+			        	 mostraMsgOperNaoImplementada();
+			         }
+		         
+		         // Banco de Dados - Editar registro
+		         if (acao.equals(sBanco[7*3])){
+			        	//TODO: implementar
+			        	 mostraMsgOperNaoImplementada();
+			         }
+		         
+		         // Banco de Dados - Inserir registro
+		         if (acao.equals(sBanco[8*3])){
+			        	//TODO: implementar
+			        	 mostraMsgOperNaoImplementada();
+			         }
+		         
+		         // Banco de Dados - Remover registro
+		         if (acao.equals(sBanco[9*3])){
+			        	//TODO: implementar
+			        	 mostraMsgOperNaoImplementada();
+			         }
+		         
+		      // Filtro = missão
+		         if (acao.equals("Missão")) {
+		        	 String mission = ((String) JOptionPane.showInputDialog(
 		        			 AstronautaGUI.this, 
-		        			 "Digite parte do nome:", 
+		        			 "Digite o nome da missão:", 
 		        			 "Filtrar Resultados",
 		        			 JFrame.EXIT_ON_CLOSE,
-		        			 new ImageIcon("./imagens/vetor/astronaut-icon.png"), 
+		        			 new ImageIcon("./imagens/vetor/space-rocket48.png"), 
 		        			 null, 
 		        			 null)).toLowerCase();
 		        	 
 		        	 DefaultListModel<Astronauta> modelAstroConsulta = new DefaultListModel<Astronauta>();
-		        	 for (Astronauta astronauta : astronautas) {
-						if (astronauta.getPrimeiro_Nome().toLowerCase().contains(parteDoNome) 
-								|| (astronauta.getNome_do_Meio().toLowerCase().contains(parteDoNome) 
-										|| (astronauta.getSobrenome().toLowerCase().contains(parteDoNome)))){
-											modelAstroConsulta.addElement(astronauta);
+			        	 for (Astronauta astronauta : astronautas) {
+			        		List<String> missoes = astronauta.getMissao();
+			        		for (String missao : missoes) {
+							
+			        			if (missao.toLowerCase().contains(mission)) {modelAstroConsulta.addElement(astronauta);}
+							
+			        			}
+			        		}
+		        		
+				        	 listaDeAstronautas.setModel(modelAstroConsulta);
+				        	 listaDeAstronautas.setSelectedIndex(0);
+				        	 listaDeAstronautas.ensureIndexIsVisible(0);
+			        		
+		         
+			        	 }
+			        	 
+		         // Filtro = parte do nome
+		         if (acao.equals("Parte do Nome")) {
+		        	 try {
+						String parteDoNome = ((String) JOptionPane
+								.showInputDialog(
+										AstronautaGUI.this,
+										"Digite parte do nome:",
+										"Filtrar Resultados",
+										JFrame.EXIT_ON_CLOSE,
+										new ImageIcon(
+												"./imagens/vetor/astronaut-icon.png"),
+										null, null)).toLowerCase();
+						DefaultListModel<Astronauta> modelAstroConsulta = new DefaultListModel<Astronauta>();
+						for (Astronauta astronauta : astronautas) {
+							if (astronauta.getPrimeiro_Nome().toLowerCase()
+									.contains(parteDoNome)
+									|| (astronauta.getNome_do_Meio()
+											.toLowerCase()
+											.contains(parteDoNome) || (astronauta
+											.getSobrenome().toLowerCase()
+											.contains(parteDoNome)))) {
+								modelAstroConsulta.addElement(astronauta);
+							}
 						}
+						listaDeAstronautas.setModel(modelAstroConsulta);
+						listaDeAstronautas.setSelectedIndex(0);
+						listaDeAstronautas.ensureIndexIsVisible(0);
+					} catch (Exception e2) {
+						// TODO: handle exception
 					}
-		        	 listaDeAstronautas.setModel(modelAstroConsulta);
-		        	 listaDeAstronautas.setSelectedIndex(0);
-		        	 listaDeAstronautas.ensureIndexIsVisible(0);
 		         }
 		         
 		         if (acao.equals("Sobre ...")){
@@ -607,7 +689,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 				JOptionPane.showMessageDialog(
 						 AstronautaGUI.this, 
 						 "Special thanks to:\n* Spacefacts - www.spacefacts.de\n	(C) Erasmo Leite Jr 2015 - eleitejr@gmail.com", 
-						 "The Astronaut Database", 
+						 "Viajantes Espaciais", 
 						 JOptionPane.INFORMATION_MESSAGE,
 						 new ImageIcon("./imagens/vetor/Astronaut-50.png"));
 			}
