@@ -142,7 +142,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 										" Astronautas","hamburger.png","A",
 										" Cosmonautas","wall.png", "C",
 										" Taikonautas","yin-yang.png","k",
-										" Turistas Espaciais","money-bag-dollar.png","T"
+										" Turistas","money-bag-dollar.png","T"
 									};
 	
 	private static String sOrdenar[] = {
@@ -161,7 +161,8 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 	private String 	strSexo = "ALL", 
 					strMissao = "ALL", 
 					strPais = "ALL",
-					strDataNasc = "ALL";
+					strDataNasc = "ALL",
+					strGrupo = "ALL";
 	
 	public static ArrayList<Astronauta> getAstronautas() {
 		return astronautas;
@@ -225,6 +226,14 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 
 	public void setStrSexo(String strSexo) {
 		this.strSexo = strSexo;
+	}
+
+	public String getStrGrupo() {
+		return strGrupo;
+	}
+
+	public void setStrGrupo(String strGrupo) {
+		this.strGrupo = strGrupo;
 	}
 
 	/*
@@ -782,21 +791,16 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 				
 				if (eventoTipo.getStateChange() == ItemEvent.SELECTED) {
 					
-					String tipoSel = ((JMenuItem)eventoTipo.getSource()).getText().substring(1, 2);
+					String grupo = ((JMenuItem)eventoTipo.getSource()).getText().substring(1);
 					
-					switch(tipoSel) {
+					setStrGrupo ((grupo == "Todos") ? "ALL": grupo);
 					
-						case "A" : default	:	
-						case "C" 		:	
-						case "k" 		:	
-						case "T"		:	{break;}
-					}	
 					/*
 					 * TODO: criar método para consulta
 					 */
 					//System.out.println("atualizando ----------------------------------------->");
 	         		//listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
-	         		//System.out.println("Filtro [SEXO = " + getStrSexo() + "] aplicado com sucesso-------> " 
+	         		//System.out.println("Filtro [GRUPO = " + getStrGrupo() + "] aplicado com sucesso-------> " 
 	         		//		+ getListaDeAstronautas().getModel().getSize() + " registros encontrados.");
 	         		//mostraStatusListaAstro();
 	         		
