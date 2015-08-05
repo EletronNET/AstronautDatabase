@@ -382,14 +382,14 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 	 * @throws SQLException
 	 */
 	public void consultaSQL() throws HeadlessException, SQLException {
-		try (Connection con = AstronautaDB.getRemoteConnection()){	
+		try (Connection con = AstronautaDB.getRemoteConnection()){
 			importaBD(con);
 		}	catch (SQLException e){
 			JOptionPane.showMessageDialog(null, 
 					"Não foi possível estabelecer conexão remota. Pressione OK para tentar conexão local...", 
 					"Erro", JOptionPane.ERROR_MESSAGE, new ImageIcon("./imagens/vetor/scary.png") );
 			try (Connection con = AstronautaDB.getLocalConnection()){
-				importaBD(con);
+			importaBD(con);
 			}
 		}
 		
@@ -811,11 +811,22 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 			    /*
 			     * INICIALIZA DADOS DAS LISTAS E CRIA O PAINEL PRINCIPAL  
 			     */
+			try {
+				consultaSQL();
+				criaListas();			
+				criaPainel();
+				criaMenu();
+				
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(
+						AstronautaGUI.this, 
+						"Não foi possível inicializar o sistema!", 
+						"Alerta", 
+						JOptionPane.ERROR_MESSAGE, 
+						new ImageIcon("./imagens/vetor/scary.png"));
+				e.printStackTrace();
+			} 
 			
-		   	consultaSQL(); 
-			criaListas();			
-			criaPainel();
-			criaMenu();
 		}
 
 	public String mostraNome(String paisISO){
