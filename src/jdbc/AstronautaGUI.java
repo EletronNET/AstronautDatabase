@@ -118,8 +118,23 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		   								"Áustria","AUT.png","u",
 		   								"Índia","IND.png", "n",
 		   								"Rep. Checa","CZE.png","h",
+		   								"Eslováquia","SVK.png","q",
 		   								"Bulgária","BGR.png","i",
-		   								"África do Sul","ZAF.png","f"
+		   								"Afeganistão","AFG.png","a",
+		   								"África do Sul","ZAF.png","f",
+		   								"Arábia Saudita","SAU.png","t",
+		   								"Holanda","NLD.png","l",
+		   								"México","MEX.png","x",
+		   								"Suécia","SWE.png","S",
+		   								"Suiça","CHE.png","ç",
+		   								"Síria","SYR.png","y",
+		   								"Reino Unido","GBR.png","U",
+		   								"Malásia","MYS.png","M",
+		   								"Israel","ISR.png","r",
+		   								"Mongólia","MNG.png","g",
+		   								"Ucrânia","UKR.png","k",
+		   								"Vietnã","VNM.png","V",
+		   								"Kazakhistam","KAZ.png","z"
 		   								}; 
 	
 	private static String sGrupo[] = {
@@ -131,7 +146,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 									};
 	
 	private static String sOrdenar[] = {
-		" Ordem de Missão","Space-Shuttle-icon.png","s",
+		" Ordem de Viagem","Space-Shuttle-icon.png","V",
 		" Sobrenome","address-book.png","n",
 		" Data de Nascimento","calendar-day.png","D",
 		" Número de Missões","counter.png", "M",
