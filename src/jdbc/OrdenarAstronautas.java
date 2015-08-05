@@ -7,18 +7,34 @@ import modelo.Astronauta;
 
 public enum OrdenarAstronautas implements Comparator<Astronauta> {
 		 
-		  PorDtNasc() {
+		 PorDtNasc() {
 		        public int compare(Astronauta one, Astronauta other) {
 		           return one.getDtNasc().compareTo(other.getDtNasc());
 		        }
 		     },
 		      
-		     PorSobrenome() {
+	     PorSobrenome() {
+	         public int compare(Astronauta one, Astronauta other) {
+	            return one.getSobrenome().compareTo(other.getSobrenome());
+	         }
+	     },
+	         
+         PorCidade() {
+	         public int compare(Astronauta one, Astronauta other) {
+	            return one.getCidade_Nasc().compareTo(other.getCidade_Nasc());
+	         }
+	      },
+	      
+	      PorIdAstronauta() {
 		         public int compare(Astronauta one, Astronauta other) {
-		            return one.getSobrenome().compareTo(other.getSobrenome());
+		        	 int comp = (one.getIdAstronauta() > other.getIdAstronauta()) ? 1 : 0;
+		         	if(comp == 0){
+		         	    comp = (one.getIdAstronauta() == other.getIdAstronauta()) ? 0 : -1;
+		         	}
+		         	return comp;
 		         }
 		      };
-		 
+	 
 		     
 		     public abstract int compare(Astronauta one, Astronauta other);
 		 

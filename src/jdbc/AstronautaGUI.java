@@ -42,14 +42,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import modelo.Astronauta;
-import modelo.CidadeComparator;
-import modelo.DataNascComparator;
-import modelo.IdAstronautaComparator;
 import modelo.ListaDeAstronautas;
 import modelo.ListaDePaises;
 import modelo.MissoesComparator;
 import modelo.Pais;
-import modelo.SobrenomeComparator;
 import dao.AstronautaDAO;
 
 @SuppressWarnings("serial")
@@ -664,24 +660,24 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		         		mostraStatusListaAstro();
 		         	}
 
-		         // Ordenar por IdAstronauta = ordem de missão ao espaço
+		         // Ordenar por IdAstronauta = ordem de viagem ao espaço
 		         if (acao.equals(sOrdenar[0*3])) {
-		        	 IdAstronautaComparator comparator = new IdAstronautaComparator();
-		        	 Collections.sort(astronautas, comparator);
+		        	 //IdAstronautaComparator comparator = new IdAstronautaComparator();
+		        	 Collections.sort(astronautas, OrdenarAstronautas.PorIdAstronauta.asc());
 		        	 listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
 		        	 ;}
 		         
 		         // Ordenar por sobrenome
 		         if (acao.equals(sOrdenar[1*3])) {
-		        	 SobrenomeComparator comparator = new SobrenomeComparator();
-		        	 Collections.sort(astronautas, comparator);
+		        	 //SobrenomeComparator comparator = new SobrenomeComparator();
+		        	 Collections.sort(astronautas, OrdenarAstronautas.PorSobrenome.asc());
 		        	 listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
 		        	 ;}
 		         
 		         // Ordenar por data de nascimento
 		         if (acao.equals(sOrdenar[2*3])) {
-		        	 DataNascComparator comparator = new DataNascComparator();
-		        	 Collections.sort(astronautas, comparator);
+		        	 //DataNascComparator comparator = new DataNascComparator();
+		        	 Collections.sort(astronautas, OrdenarAstronautas.PorDtNasc.asc());
 		        	 listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
 		        	 ;}
 		         
@@ -694,8 +690,8 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		         
 		         // Ordenar por cidade de nascimento
 		         if (acao.equals(sOrdenar[4*3])) {
-		        	 CidadeComparator comparator = new CidadeComparator();
-		        	 Collections.sort(astronautas, comparator);
+		        	 //CidadeComparator comparator = new CidadeComparator();
+		        	 Collections.sort(astronautas, OrdenarAstronautas.PorCidade.asc());
 		        	 listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
 		        	 ;}
 		         
