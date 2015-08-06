@@ -96,42 +96,42 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 	
 	private static String sPais[] = {
 										"Todos","ALL.png","T",
-		   								"Estados Unidos","USA.png","E",
-		   								"Russia","RUS.png","R",
-		   								"China","CHN.png","C",
-		   								"Japão","JPN.png","J",
-		   								"Alemanha","DEU.png","A",
-		   								"França","FRA.png","F",
-		   								"Canadá","CAN.png","d",
-		   								"Itália","ITA.png","I",
-		   								"Brasil","BRA.png","B",
-		   								"Hungria","HUN.png","H",
-		   								"Romênia","ROU.png","o",
-		   								"Polônia","POL.png","P",
-		   								"Bélgica","BEL.png", "L",
-		   								"Coréia do Sul","KOR.png","K",
-		   								"Cuba","CUB.png","b",
-		   								"Áustria","AUT.png","u",
-		   								"Índia","IND.png", "n",
-		   								"Rep. Checa","CZE.png","h",
-		   								"Eslováquia","SVK.png","q",
-		   								"Bulgária","BGR.png","i",
-		   								"Afeganistão","AFG.png","a",
-		   								"África do Sul","ZAF.png","f",
-		   								"Arábia Saudita","SAU.png","t",
-		   								"Holanda","NLD.png","l",
-		   								"México","MEX.png","x",
+										"Afeganistão","AFG.png","a",
+										"África do Sul","ZAF.png","f",
+										"Alemanha","DEU.png","A",
+										"Arábia Saudita","SAU.png","t",
+										"Áustria","AUT.png","u",
+										"Bélgica","BEL.png", "L",
+										"Brasil","BRA.png","B",
+										"Bulgária","BGR.png","i",
+										"Canadá","CAN.png","d",
+										"Casaquistão","KAZ.png","z",
+										"China","CHN.png","C",
+										"Coréia do Sul","KOR.png","K",
+										"Cuba","CUB.png","b",
+										"Eslováquia","SVK.png","q",
+										"Estados Unidos","USA.png","E",
+										"França","FRA.png","F",
+										"Holanda","NLD.png","l",
+										"Hungria","HUN.png","H",
+										"Índia","IND.png", "n",
+										"Israel","ISR.png","r",
+										"Itália","ITA.png","I",
+										"Japão","JPN.png","J",	
+										"Malásia","MYS.png","M",
+										"México","MEX.png","x",
+										"Mongólia","MNG.png","g",
+										"Polônia","POL.png","P",
+										"Rep. Checa","CZE.png","h",
+										"Reino Unido","GBR.png","U",
+										"Romênia","ROU.png","o",
+		   								"Russia","RUS.png","R",		   								
+		   								"Síria","SYR.png","y",	   									   								
 		   								"Suécia","SWE.png","S",
-		   								"Suiça","CHE.png","ç",
-		   								"Síria","SYR.png","y",
-		   								"Reino Unido","GBR.png","U",
-		   								"Malásia","MYS.png","M",
-		   								"Israel","ISR.png","r",
-		   								"Mongólia","MNG.png","g",
+		   								"Suiça","CHE.png","ç",		   								
 		   								"Ucrânia","UKR.png","k",
-		   								"Vietnã","VNM.png","V",
-		   								"Kazakhistam","KAZ.png","z"
-		   								}; 
+		   								"Vietnã","VNM.png","V",		   								
+		   							}; 
 	
 	private static String sGrupo[] = {
 										" Todos","globe-green.png","o",
@@ -287,9 +287,9 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 						      miMale.addItemListener(mrh);
 						      miFemale.addItemListener(mrh);
 						      ButtonGroup bg = new ButtonGroup();
-						      bg.add(miMale);bg.add(miFemale);bg.add(miAmbos);
+						      bg.add(miAmbos);bg.add(miMale);bg.add(miFemale);
 						      
-						      menuSexo.add(miMale);menuSexo.add(miFemale);menuSexo.add(miAmbos);
+						      menuSexo.add(miAmbos);menuSexo.add(miMale);menuSexo.add(miFemale);
 						  
 						  MenuBuilder.imagePrefix = "./imagens/flags/";
 						  JMenu menuPais = MenuBuilder.newRadioButtonMenu("Pais", 'P', sPais, mcbh);
@@ -604,7 +604,10 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 			        		List<String> missoes = astronauta.getMissao();
 			        		for (String missao : missoes) {
 							
-			        			if (missao.toLowerCase().contains(mission)) {modelAstroConsulta.addElement(astronauta);}
+			        			if (missao.toLowerCase().contains(mission)) {
+			        				modelAstroConsulta.addElement(astronauta);
+			        				break;
+			        				}
 							
 			        			}
 			        		}
@@ -655,7 +658,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		         
 		         if (acao.equals("Atualiza")){
 		         		System.out.println("atualizando ----------------------------------------->");
-		         		listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
+		         		listaDeAstronautas.filtra(getAstronautas(), getStrSexo(), getStrPais(), getStrGrupo());
 		         		System.out.println("Operação realizada com sucesso-------> " + getListaDeAstronautas().getModel().getSize() + " registros encontrados.");
 		         		mostraStatusListaAstro();
 		         	}
@@ -664,35 +667,35 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		         if (acao.equals(sOrdenar[0*3])) {
 		        	 //IdAstronautaComparator comparator = new IdAstronautaComparator();
 		        	 Collections.sort(astronautas, OrdenarAstronautas.PorIdAstronauta.asc());
-		        	 listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
+		        	 listaDeAstronautas.filtra(getAstronautas(), getStrSexo(), getStrPais(), getStrGrupo());
 		        	 ;}
 		         
 		         // Ordenar por sobrenome
 		         if (acao.equals(sOrdenar[1*3])) {
 		        	 //SobrenomeComparator comparator = new SobrenomeComparator();
 		        	 Collections.sort(astronautas, OrdenarAstronautas.PorSobrenome.asc());
-		        	 listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
+		        	 listaDeAstronautas.filtra(getAstronautas(), getStrSexo(), getStrPais(), getStrGrupo());
 		        	 ;}
 		         
 		         // Ordenar por data de nascimento
 		         if (acao.equals(sOrdenar[2*3])) {
 		        	 //DataNascComparator comparator = new DataNascComparator();
 		        	 Collections.sort(astronautas, OrdenarAstronautas.PorDtNasc.asc());
-		        	 listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
+		        	 listaDeAstronautas.filtra(getAstronautas(), getStrSexo(), getStrPais(), getStrGrupo());
 		        	 ;}
 		         
 		         // Ordenar por número de missões
 		         if (acao.equals(sOrdenar[3*3])) {
 		        	 MissoesComparator comparator = new MissoesComparator();
 		        	 Collections.sort(astronautas, comparator);
-		        	 listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
+		        	 listaDeAstronautas.filtra(getAstronautas(), getStrSexo(), getStrPais(), getStrGrupo());
 		        	 ;}
 		         
 		         // Ordenar por cidade de nascimento
 		         if (acao.equals(sOrdenar[4*3])) {
 		        	 //CidadeComparator comparator = new CidadeComparator();
 		        	 Collections.sort(astronautas, OrdenarAstronautas.PorCidade.asc());
-		        	 listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
+		        	 listaDeAstronautas.filtra(getAstronautas(), getStrSexo(), getStrPais(), getStrGrupo());
 		        	 ;}
 		         
 		         // Ordenar por tempo no espaço
@@ -741,9 +744,8 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 					setStrPais(paisSel.substring(16,19));
 					
 						System.out.println("atualizando ----------------------------------------->");
-						listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
-						System.out.println("Filtro [PAIS = " + getStrPais() + "] aplicado com sucesso-------> " 
-								+ getListaDeAstronautas().getModel().getSize() + " registros encontrados.");
+						listaDeAstronautas.filtra(getAstronautas(), getStrSexo(), getStrPais(), getStrGrupo());
+						mostraFiltros();
 						//mostraStatusListaAstro();
 
 				  }
@@ -770,9 +772,8 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 					}	
 					
 					System.out.println("atualizando ----------------------------------------->");
-	         		listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
-	         		System.out.println("Filtro [SEXO = " + getStrSexo() + "] aplicado com sucesso-------> " 
-	         				+ getListaDeAstronautas().getModel().getSize() + " registros encontrados.");
+	         		listaDeAstronautas.filtra(getAstronautas(), getStrSexo(), getStrPais(), getStrGrupo());
+	         		mostraFiltros();
 	         		//mostraStatusListaAstro();
 	         		
 				}
@@ -789,15 +790,14 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 					
 					String grupo = ((JMenuItem)eventoTipo.getSource()).getText().substring(1);
 					
-					setStrGrupo ((grupo == "Todos") ? "ALL": grupo);
+					setStrGrupo((grupo=="Todos")? "ALL": grupo);
 					
 					/*
 					 * TODO: criar método para consulta
 					 */
-					//System.out.println("atualizando ----------------------------------------->");
-	         		//listaDeAstronautas.atualiza(getAstronautas(), getStrSexo(), getStrPais());
-	         		//System.out.println("Filtro [GRUPO = " + getStrGrupo() + "] aplicado com sucesso-------> " 
-	         		//		+ getListaDeAstronautas().getModel().getSize() + " registros encontrados.");
+					System.out.println("atualizando ----------------------------------------->");
+	         		listaDeAstronautas.filtra(getAstronautas(), getStrSexo(), getStrPais(), getStrGrupo());
+	         		mostraFiltros();
 	         		//mostraStatusListaAstro();
 	         		
 				}
@@ -845,6 +845,14 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 			} 
 		}
 		return null;
+	}
+
+	/**
+	 * 
+	 */
+	public void mostraFiltros() {
+		System.out.println("Filtro [PAIS = " + getStrPais() + "][SEXO = " + getStrSexo() + "][GRUPO = " + getStrGrupo() + "] -------> " 
+				+ getListaDeAstronautas().getModel().getSize() + " registros encontrados.");
 	}
 
 	/*
