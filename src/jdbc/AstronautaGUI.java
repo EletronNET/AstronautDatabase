@@ -711,7 +711,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 			public void mostraMsgSobre() throws HeadlessException {
 				JOptionPane.showMessageDialog(
 						 AstronautaGUI.this, 
-						 "Special thanks to:\n* Spacefacts - www.spacefacts.de\n	(C) Erasmo Leite Jr 2015 - eleitejr@gmail.com", 
+						 "(C) Erasmo Leite Jr 2015 - eleitejr@gmail.com\n\nThanks to:\n- Spacefacts - www.spacefacts.de\n- ASTROnote - http://astronaut.ru/", 
 						 "Viajantes Espaciais", 
 						 JOptionPane.INFORMATION_MESSAGE,
 						 new ImageIcon("./imagens/vetor/Astronaut-50.png"));
