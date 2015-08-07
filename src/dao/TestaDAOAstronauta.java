@@ -35,7 +35,7 @@ public class TestaDAOAstronauta {
 				dataNasc, 
 				dataFalec, 
 				missoes,
-				null
+				0, null
 				);
 
 		try (Connection con = AstronautaDB.getLocalConnection()) {

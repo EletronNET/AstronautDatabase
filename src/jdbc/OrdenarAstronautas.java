@@ -25,6 +25,16 @@ public enum OrdenarAstronautas implements Comparator<Astronauta> {
 	         }
 	      },
 	      
+	      PorNumDeMissoes() {
+		         public int compare(Astronauta one, Astronauta other) {
+		        	 int comp = (one.getN_missoes() > other.getN_missoes()) ? 1 : 0;
+			         	if(comp == 0){
+			         	    comp = (one.getN_missoes() == other.getN_missoes()) ? 0 : -1;
+			         	}
+			         	return comp;
+			         }
+		      },
+	      
 	      PorIdAstronauta() {
 		         public int compare(Astronauta one, Astronauta other) {
 		        	 int comp = (one.getIdAstronauta() > other.getIdAstronauta()) ? 1 : 0;

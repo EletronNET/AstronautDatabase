@@ -34,6 +34,8 @@ public class Astronauta {
 	
 	private List<String> 	missao;
 	
+	private int				N_missoes;
+	
 	private Blob			Imagem;
 	
 	// construtor
@@ -52,6 +54,7 @@ public class Astronauta {
 			Date dtNasc, 
 			Date dtFalec,
 			List<String> missao,
+			int n_missoes,
 			Blob imagem) {
 		super();
 		this.idAstronauta = idAstronauta;
@@ -68,6 +71,7 @@ public class Astronauta {
 		DtNasc = dtNasc;
 		DtFalec = dtFalec;
 		this.missao = missao;
+		N_missoes = n_missoes;
 		Imagem = imagem;
 	}
 
@@ -159,6 +163,14 @@ public class Astronauta {
 	}
 	public void setMissao(List<String> missao) {
 		this.missao = missao;
+	}
+
+	public int getN_missoes() {
+		return N_missoes;
+	}
+
+	public void setN_missoes(int n_missoes) {
+		N_missoes = n_missoes;
 	}
 
 	public Blob getImagem() {

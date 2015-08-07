@@ -44,7 +44,6 @@ import javax.swing.event.ListSelectionListener;
 import modelo.Astronauta;
 import modelo.ListaDeAstronautas;
 import modelo.ListaDePaises;
-import modelo.MissoesComparator;
 import modelo.Pais;
 import dao.AstronautaDAO;
 
@@ -686,8 +685,8 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		         
 		         // Ordenar por número de missões
 		         if (acao.equals(sOrdenar[3*3])) {
-		        	 MissoesComparator comparator = new MissoesComparator();
-		        	 Collections.sort(astronautas, comparator);
+		        	 //MissoesComparator comparator = new MissoesComparator();
+		        	 Collections.sort(astronautas, OrdenarAstronautas.PorNumDeMissoes.desc());
 		        	 listaDeAstronautas.filtra(getAstronautas(), getStrSexo(), getStrPais(), getStrGrupo());
 		        	 ;}
 		         
@@ -711,7 +710,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 			public void mostraMsgSobre() throws HeadlessException {
 				JOptionPane.showMessageDialog(
 						 AstronautaGUI.this, 
-						 "(C) Erasmo Leite Jr 2015 - eleitejr@gmail.com\n\nThanks to:\n- Spacefacts - www.spacefacts.de\n- ASTROnote - http://astronaut.ru/", 
+						 "(C) Erasmo Leite Jr 2015 - eleitejr@gmail.com\n\nThanks to:\n- Spacefacts - http://www.spacefacts.de\n- ASTROnote - http://astronaut.ru/", 
 						 "Viajantes Espaciais", 
 						 JOptionPane.INFORMATION_MESSAGE,
 						 new ImageIcon("./imagens/vetor/Astronaut-50.png"));

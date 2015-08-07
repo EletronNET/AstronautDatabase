@@ -86,6 +86,8 @@ public class AstronautaDAO {
 		
 		Date 	dataNasc, dataFalec;
 		
+		int n_missoes = 0;
+		
 		Blob	imagem = null;
 
 		List<Astronauta> astronautas = new ArrayList<>();
@@ -119,6 +121,8 @@ public class AstronautaDAO {
 						String mission = rs.getString("m" + (m));
 						missoes.add(mission);
 						
+					n_missoes = rs.getInt("N_missoes");
+						
 					imagem = rs.getBlob("Imagem");
 					}
 
@@ -140,6 +144,7 @@ public class AstronautaDAO {
 								dataNasc, 	// sql.Date
 								dataFalec,  // sql.Date
 								missoes,	// ArrayList<String>
+								n_missoes,  // int
 								imagem		// sql.Blob
 					);
 					
@@ -177,6 +182,7 @@ public class AstronautaDAO {
 					for (int i = 1; i<=8; i++) {
 						missao.add(resultSet.getString("m" + i));
 					}
+					int n_missoes = resultSet.getInt("N_missoes");
 					Blob imagem = resultSet.getBlob("Imagem");
 					
 					Astronauta a = new Astronauta(
@@ -194,6 +200,7 @@ public class AstronautaDAO {
 							dataNasc, 
 							dataFalec, 
 							missao,
+							n_missoes, 
 							imagem);
 		
 					alAstros.add(a);
@@ -239,6 +246,6 @@ public class AstronautaDAO {
 	public static final Astronauta NENHUM 
 		= new Astronauta(0, "SEM REGISTRO", "", "", "", "", "", 
 				"anonymous.jpg", "M", "", "", java.sql.Date.valueOf("1900-01-01"), 
-				java.sql.Date.valueOf("2100-01-01"), new ArrayList<String>(), null);
+				java.sql.Date.valueOf("2100-01-01"), new ArrayList<String>(), 0, null);
 
 }
