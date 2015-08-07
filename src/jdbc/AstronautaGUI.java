@@ -146,7 +146,9 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		" Data de Nascimento","calendar-day.png","D",
 		" Número de Missões","counter.png", "M",
 		" Cidade de Nascimento","building-hedge.png","C",
-		" Tempo no Espaço","alarm-clock.png","ç"
+		" Tempo no Espaço","alarm-clock.png","ç",
+		null,null,null,
+		" Inverter Ordem","arrow-return-090.png","I"
 	};
 	   
 	private static String sAjuda[] = {
