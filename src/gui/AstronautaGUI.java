@@ -1,4 +1,4 @@
-package jdbc;
+package gui;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -41,6 +41,9 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import jdbc.AstronautaDB;
+import jdbc.MenuBuilder;
+import jdbc.OrdenarAstronautas;
 import modelo.Astronauta;
 import modelo.ListaDeAstronautas;
 import modelo.ListaDePaises;
