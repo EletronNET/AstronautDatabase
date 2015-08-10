@@ -10,6 +10,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import jdbc.AstronautaDB;
 import modelo.Astronauta;
 import modelo.Pais;
@@ -241,6 +243,32 @@ public class AstronautaDAO {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public boolean remove(Astronauta astronauta) throws SQLException{
+		// TODO: implementar remocao de astronauta
+		int ConfirmaExclusao = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do astronauta: " + astronauta + " ?", "Exclusão de Registro", JOptionPane.QUESTION_MESSAGE);
+		if (ConfirmaExclusao == 1) try {
+			Statement statement = this.con.createStatement();
+			boolean resultado = statement.execute
+			("REMOVE FROM astronauta WHERE IdAstronauta = " + astronauta.getIdAstronauta());
+			if (resultado) {
+				System.out.println("Registro excluido com sucesso.");
+				statement.close();
+				return true;} 
+					
+				else {
+							System.out.println("Erro de acesso ao banco de dados! Não foi possível excluir o registro.");
+							return false;
+			}
+			
+		} catch (Exception e) {
+				System.out.println("Erro de acesso ao Banco de Dados");
+				e.printStackTrace();
+				}
+		return false;
+		} 
+		
+		
 	
 
 	public static final Astronauta NENHUM 

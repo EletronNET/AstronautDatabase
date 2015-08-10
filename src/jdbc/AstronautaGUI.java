@@ -361,8 +361,8 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		split2.setOneTouchExpandable(true);
 		split3.setDividerLocation(alturaJanela);
 		taInfo.setEditable(false);
-		taInfo.setAutoscrolls(false);
-		taInfoBio.setAutoscrolls(false);
+		taInfo.setAutoscrolls(true);
+		taInfoBio.setAutoscrolls(true);
 		taInfoBio.setEditable(false);
 		taInfo.setSelectionStart(0);
 		taInfoBio.setSelectionStart(0);
