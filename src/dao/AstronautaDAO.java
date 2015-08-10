@@ -12,7 +12,6 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import jdbc.AstronautaDB;
 import modelo.Astronauta;
 import modelo.Pais;
 

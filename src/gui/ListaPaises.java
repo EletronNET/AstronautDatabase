@@ -1,9 +1,11 @@
-package jdbc;
+package gui;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import dao.AstronautaDB;
 
 
 public class ListaPaises {

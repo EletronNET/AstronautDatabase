@@ -1,4 +1,4 @@
-package jdbc;
+package gui;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;

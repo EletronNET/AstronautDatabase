@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import jdbc.AstronautaDB;
+import dao.AstronautaDB;
 
 public class ListaAstronauta {
 
