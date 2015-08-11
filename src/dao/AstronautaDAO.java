@@ -39,8 +39,9 @@ public class AstronautaDAO {
 				+ "DtFalec, "
 				+ "Foto, "
 				+ "Info, "
+				+ "Info_eng, "
 				+ "m1, m2, m3, m4, m5, m6, m7, m8) "
-				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 		try (PreparedStatement stmt = con.prepareStatement(sql)) {
 
@@ -56,13 +57,14 @@ public class AstronautaDAO {
 			stmt.setDate(10, astronauta.getDtFalec());
 			stmt.setString(11, astronauta.getFoto());
 			stmt.setString(12, astronauta.getInfo());
+			stmt.setString(13, astronauta.getInfo_eng());
 
 			int numMissoes = astronauta.getMissao().size();
 			for (int k = 0; k < numMissoes; k++){
-				stmt.setString(13 + k, astronauta.getMissao().get(k));
+				stmt.setString(14 + k, astronauta.getMissao().get(k));
 			}
 			for (int k = numMissoes; k < 8; k++){
-				stmt.setString(13 + k, null);
+				stmt.setString(14 + k, null);
 			}
 
 			stmt.execute();
