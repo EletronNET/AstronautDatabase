@@ -41,6 +41,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import crud.AstronautaCreate2;
 import modelo.Astronauta;
 import modelo.ListaDeAstronautas;
 import modelo.ListaDePaises;
@@ -580,8 +581,24 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		         
 		         // Banco de Dados - Inserir registro
 		         if (acao.equals(sBanco[8*3])){
-			        	//TODO: implementar
-			        	 mostraMsgOperNaoImplementada();
+			        	Astronauta astronauta = new AstronautaCreate2().getNovoAstronauta();
+			        	try (Connection con = AstronautaDB.getRemoteConnection()){
+			        		AstronautaDAO dao = new AstronautaDAO(con);
+			        		dao.salva(astronauta);
+			    		}	catch (SQLException evt){
+			    			JOptionPane.showMessageDialog(null, 
+			    					"Não foi possível estabelecer conexão remota. Pressione OK para tentar conexão local...", 
+			    					"Erro", JOptionPane.ERROR_MESSAGE, new ImageIcon("./imagens/vetor/scary.png") );
+			    			try (Connection con = AstronautaDB.getLocalConnection()){
+			    				AstronautaDAO dao = new AstronautaDAO(con);
+			    				dao.salva(astronauta);
+			    			} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+			    		}
+			        	
+			        	 //mostraMsgOperNaoImplementada();
 			         }
 		         
 		         // Banco de Dados - Remover registro

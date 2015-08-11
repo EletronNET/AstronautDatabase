@@ -75,6 +75,41 @@ public class Astronauta {
 		Imagem = imagem;
 	}
 
+	// construtor sem idAstronauta
+		public Astronauta(
+				String primeiro_Nome,
+				String nome_do_Meio, 
+				String sobrenome, 
+				String pais_Nasc,
+				String estado_Nasc, 
+				String cidade_Nasc, 
+				String foto, 
+				String sexo,
+				String info, 
+				String info_eng, 
+				Date dtNasc, 
+				Date dtFalec,
+				List<String> missao,
+				int n_missoes,
+				Blob imagem) {
+			super();
+			Primeiro_Nome = primeiro_Nome;
+			Nome_do_Meio = nome_do_Meio;
+			Sobrenome = sobrenome;
+			Pais_Nasc = pais_Nasc;
+			Estado_Nasc = estado_Nasc;
+			Cidade_Nasc = cidade_Nasc;
+			Foto = foto;
+			Sexo = sexo;
+			Info = info;
+			Info_eng = info_eng;
+			DtNasc = dtNasc;
+			DtFalec = dtFalec;
+			this.missao = missao;
+			N_missoes = n_missoes;
+			Imagem = imagem;
+		}
+	
 	public Astronauta() {
 		// TODO Auto-generated constructor stub
 	}
