@@ -1,10 +1,22 @@
 package crud;
 
+import java.awt.event.ActionEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
+
+import javax.swing.SpinnerDateModel;
+
+import modelo.Astronauta;
+
 /**
  *
  * @author Erasmo
  */
+@SuppressWarnings("serial")
 public class AstronautaCreate extends javax.swing.JFrame {
+	
+	String meses[] = new String[] {"Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
 
     /**
      * Creates new form AstronautaCreate
@@ -46,20 +58,20 @@ public class AstronautaCreate extends javax.swing.JFrame {
         tfPrimeiro_Nome = new javax.swing.JTextField();
         tfNome_do_Meio = new javax.swing.JTextField();
         tfSobrenome = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
-        jTextField10 = new javax.swing.JTextField();
-        jTextField11 = new javax.swing.JTextField();
-        jTextField12 = new javax.swing.JTextField();
-        jTextField13 = new javax.swing.JTextField();
-        jTextField14 = new javax.swing.JTextField();
-        jTextField15 = new javax.swing.JTextField();
-        jTextField16 = new javax.swing.JTextField();
-        jTextField17 = new javax.swing.JTextField();
-        jTextField18 = new javax.swing.JTextField();
-        jTextField19 = new javax.swing.JTextField();
-        jLabel22 = new javax.swing.JLabel();
+        tfCidade = new javax.swing.JTextField();
+        tfEstado = new javax.swing.JTextField();
+        tfFoto = new javax.swing.JTextField();
+        tfBio = new javax.swing.JTextField();
+        tfBio_eng = new javax.swing.JTextField();
+        tfMissao1 = new javax.swing.JTextField();
+        tfMissao2 = new javax.swing.JTextField();
+        tfMissao3 = new javax.swing.JTextField();
+        tfMissao4 = new javax.swing.JTextField();
+        tfMissao5 = new javax.swing.JTextField();
+        tfMissao6 = new javax.swing.JTextField();
+        tfMissao7 = new javax.swing.JTextField();
+        tfMissao8 = new javax.swing.JTextField();
+        lSexo = new javax.swing.JLabel();
         spDia_Nasc = new javax.swing.JSpinner();
         spMes_Nasc = new javax.swing.JSpinner();
         spAno_Nasc = new javax.swing.JSpinner();
@@ -80,44 +92,29 @@ public class AstronautaCreate extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lPrimeiro_Nome.setText("Primeiro Nome");
-
         lNome_do_Meio.setText("Nome do Meio");
-
         lSobrenome.setText("Sobrenome");
-
         lData_Nasc.setText("Data de Nascimento");
-
         lData_Falec.setText("Data de Falecimento");
-
         lCidade.setText("Cidade");
-
         lEstado.setText("Estado");
-
         lPais.setText("País");
-
         lBio.setText("Biografia");
-
         lBio_eng.setText("Bio Inglês");
-
         lMissao1.setText("Missão 1");
-
         lMissao2.setText("Missão 2");
-
         lMissao3.setText("Missão 3");
-
         lMissao4.setText("Missão 4");
-
         lMissao5.setText("Missão 5");
-
         lMissao6.setText("Missão 6");
-
         lMissao7.setText("Missão 7");
-
         lMissao8.setText("Missão 8");
-
         lFoto.setText("Foto");
+        lSexo.setText("Sexo");
 
         limpaCampos();
+        
+        spMes_Nasc.setModel(new SpinnerDateModel());
 
         cbPais.setModel(new javax.swing.DefaultComboBoxModel(new String[] {
 				"Afeganistão",
@@ -189,7 +186,7 @@ public class AstronautaCreate extends javax.swing.JFrame {
                             .addComponent(lEstado)
                             .addComponent(lPais)
                             .addComponent(lFoto)
-                            .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(lPrimeiro_Nome, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -198,8 +195,8 @@ public class AstronautaCreate extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tfPrimeiro_Nome, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cbPais, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -213,7 +210,7 @@ public class AstronautaCreate extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(spAno_Nasc, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
                                     .addComponent(spAno_Falec)))
-                            .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(rbHomem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -228,43 +225,43 @@ public class AstronautaCreate extends javax.swing.JFrame {
                                 .addComponent(lSobrenome)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(tfSobrenome, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE))
-                            .addComponent(jTextField10, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField11, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfBio, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfBio_eng, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addGap(332, 332, 332)
                                 .addComponent(lBio_eng))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(lMissao5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tfMissao5, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(lMissao6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField17)
+                                .addComponent(tfMissao6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(lMissao7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField18, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+                                .addComponent(tfMissao7, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(lMissao8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(tfMissao8, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(lMissao1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tfMissao1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(lMissao2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tfMissao2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(lMissao3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tfMissao3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(lMissao4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(tfMissao4, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(21, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(rbMulher, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -273,7 +270,7 @@ public class AstronautaCreate extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jTextField12, jTextField13, jTextField14, jTextField15, jTextField16, jTextField17, jTextField18, jTextField19});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {tfMissao1, tfMissao2, tfMissao3, tfMissao4, tfMissao5, tfMissao6, tfMissao7, tfMissao8});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -293,31 +290,31 @@ public class AstronautaCreate extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField10)
+                        .addComponent(tfBio)
                         .addGap(18, 18, 18)
                         .addComponent(lBio_eng)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tfBio_eng, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lMissao1)
-                            .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfMissao1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lMissao2)
-                            .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfMissao2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lMissao3)
-                            .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfMissao3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lMissao4)
-                            .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tfMissao4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lMissao5)
-                            .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfMissao5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lMissao6)
-                            .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfMissao6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lMissao7)
-                            .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfMissao7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lMissao8)
-                            .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(tfMissao8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lData_Nasc)
@@ -333,11 +330,11 @@ public class AstronautaCreate extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lCidade)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tfCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lEstado)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tfEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lPais)
@@ -345,10 +342,10 @@ public class AstronautaCreate extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lFoto)
-                            .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tfFoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(27, 27, 27)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel22)
+                            .addComponent(lSexo)
                             .addComponent(rbHomem)
                             .addComponent(jLabel21))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -358,14 +355,14 @@ public class AstronautaCreate extends javax.swing.JFrame {
                 .addGap(28, 28, 28))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jTextField10, jTextField11});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {tfBio, tfBio_eng});
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cbPais, jTextField6, jTextField7, jTextField9});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cbPais, tfCidade, tfEstado, tfFoto});
 
         bSair.setText("Sair");
         bSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                bSairActionPerformed(evt);
             }
         });
 
@@ -374,9 +371,91 @@ public class AstronautaCreate extends javax.swing.JFrame {
 
         bLimpar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         bLimpar.setText("Limpar");
+        bLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bLimparActionPerformed(evt);
+            }
+
+			private void bLimparActionPerformed(ActionEvent evt) {
+				limpaCampos();
+				
+			}
+        });
 
         bSalvar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         bSalvar.setText("Salvar");
+        bSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+					bSalvarActionPerformed(evt);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+
+			@SuppressWarnings("null")
+			private void bSalvarActionPerformed(ActionEvent evt) throws ParseException {
+				String primeiro_nome = tfPrimeiro_Nome.getText();
+	    		String nome_do_meio = tfNome_do_Meio.getText();
+	    		String sobrenome = tfSobrenome.getText();
+	    		String pais = cbPais.getSelectedItem().toString();
+	    		String estado = tfEstado.getText();
+	    		String cidade = tfCidade.getText();
+	    		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	    	    java.util.Date dataN = format.parse(spAno_Nasc.getValue() + "-" + spMes_Nasc.getValue() + "-" + spDia_Nasc.getValue());
+	    	    java.sql.Date data_nasc =  new java.sql.Date(dataN.getTime()); 
+	    	    java.util.Date dataF = format.parse(spAno_Falec.getValue() + "-" + spMes_Falec.getValue() + "-" + spDia_Falec.getValue());
+	    		java.sql.Date data_falec = new java.sql.Date(dataF.getTime());
+	    		String foto = tfFoto.getText();
+	    		String sexo = (rbHomem.isSelected())? "M" : "F";
+	    		String bio = tfBio.getText();
+	    		String bio_eng = tfBio_eng.getText();
+	    		String m1 = tfMissao1.getText();
+	    		String m2 = tfMissao2.getText();
+	    		String m3 = tfMissao3.getText();
+	    		String m4 = tfMissao4.getText();
+	    		String m5 = tfMissao5.getText();
+	    		String m6 = tfMissao6.getText();
+	    		String m7 = tfMissao7.getText();
+	    		String m8 = tfMissao8.getText();
+	    		
+	    		List<String> missao = null;
+	    		missao.add(m1);
+	    		missao.add(m2);
+	    		missao.add(m3);
+	    		missao.add(m4);
+	    		missao.add(m5);
+	    		missao.add(m6);
+	    		missao.add(m7);
+	    		missao.add(m8);
+	    		
+	    		int n_missoes = missao.size();
+	    		
+	    		Astronauta novoAstronauta = new Astronauta(
+	    				primeiro_nome,
+	    				nome_do_meio,
+	    				sobrenome, 
+	    				pais,
+	    				estado,
+	    				cidade,
+	    				foto,
+	    				sexo,
+	    				bio,
+	    				bio_eng,
+	    				data_nasc,
+	    				data_falec,
+	    				missao,
+	    				n_missoes,
+	    				null
+	    			);
+	    		
+	    		//this.setNovoAstronauta(novoAstronauta);	
+	    	}
+				
+			});
+
+        
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -424,36 +503,35 @@ public class AstronautaCreate extends javax.swing.JFrame {
 
         tfSobrenome.setText("");
 
-        jTextField6.setText("");
+        tfCidade.setText("");
 
-        jTextField7.setText("");
+        tfEstado.setText("");
 
-        jTextField9.setText("");
+        tfFoto.setText("");
 
-        jTextField10.setText("");
+        tfBio.setText("");
 
-        jTextField11.setText("");
+        tfBio_eng.setText("");
 
-        jTextField12.setText("");
+        tfMissao1.setText("");
 
-        jTextField13.setText("");
+        tfMissao2.setText("");
 
-        jTextField14.setText("");
+        tfMissao3.setText("");
 
-        jTextField15.setText("");
+        tfMissao4.setText("");
 
-        jTextField16.setText("");
+        tfMissao5.setText("");
 
-        jTextField17.setText("");
+        tfMissao6.setText("");
 
-        jTextField18.setText("");
+        tfMissao7.setText("");
 
-        jTextField19.setText("");
+        tfMissao8.setText("");
 
-        jLabel22.setText("Sexo");
 	}
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    private void bSairActionPerformed(java.awt.event.ActionEvent evt) {                                         
         System.exit(0);
     }                                        
 
@@ -491,6 +569,7 @@ public class AstronautaCreate extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(AstronautaCreate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+    		
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -505,7 +584,8 @@ public class AstronautaCreate extends javax.swing.JFrame {
     private javax.swing.JButton bLimpar;
     private javax.swing.JButton bSalvar;
     private javax.swing.JButton bSair;
-    private javax.swing.JComboBox cbPais;
+    @SuppressWarnings("rawtypes")
+	private javax.swing.JComboBox cbPais;
     private javax.swing.JLabel lTitulo;
     private javax.swing.JLabel lBio;
     private javax.swing.JLabel lBio_eng;
@@ -520,7 +600,7 @@ public class AstronautaCreate extends javax.swing.JFrame {
     private javax.swing.JLabel lPrimeiro_Nome;
     private javax.swing.JLabel lFoto;
     private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel lSexo;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel lNome_do_Meio;
     private javax.swing.JLabel lSobrenome;
@@ -538,19 +618,19 @@ public class AstronautaCreate extends javax.swing.JFrame {
     private javax.swing.JSpinner spDia_Falec;
     private javax.swing.JSpinner spMes_Falec;
     private javax.swing.JSpinner spAno_Falec;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField15;
-    private javax.swing.JTextField jTextField16;
-    private javax.swing.JTextField jTextField17;
-    private javax.swing.JTextField jTextField18;
-    private javax.swing.JTextField jTextField19;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField tfBio;
+    private javax.swing.JTextField tfBio_eng;
+    private javax.swing.JTextField tfMissao1;
+    private javax.swing.JTextField tfMissao2;
+    private javax.swing.JTextField tfMissao3;
+    private javax.swing.JTextField tfMissao4;
+    private javax.swing.JTextField tfMissao5;
+    private javax.swing.JTextField tfMissao6;
+    private javax.swing.JTextField tfMissao7;
+    private javax.swing.JTextField tfMissao8;
+    private javax.swing.JTextField tfCidade;
+    private javax.swing.JTextField tfEstado;
+    private javax.swing.JTextField tfFoto;
     private javax.swing.JTextField tfNome_do_Meio;
     private javax.swing.JTextField tfPrimeiro_Nome;
     private javax.swing.JTextField tfSobrenome;
