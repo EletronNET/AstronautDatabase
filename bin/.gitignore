@@ -1,6 +1,5 @@
 /crud/
-/gui/
-/jdbc/
 /dao/
-/utility/
+/gui/
 /modelo/
+/utility/
