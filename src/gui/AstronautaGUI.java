@@ -41,6 +41,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import crud.AstronautaCreate;
 import crud.AstronautaCreate2;
 import modelo.Astronauta;
 import modelo.ListaDeAstronautas;
@@ -581,7 +582,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		         
 		         // Banco de Dados - Inserir registro
 		         if (acao.equals(sBanco[8*3])){
-			        	Astronauta astronauta = new AstronautaCreate2().getNovoAstronauta();
+			        	Astronauta astronauta = new AstronautaCreate().getNovoAstronauta();
 			        	try (Connection con = AstronautaDB.getRemoteConnection()){
 			        		AstronautaDAO dao = new AstronautaDAO(con);
 			        		dao.salva(astronauta);

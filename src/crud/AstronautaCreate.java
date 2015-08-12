@@ -1,12 +1,22 @@
 package crud;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import javax.swing.JComponent;
+import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
+import javax.swing.SpinnerListModel;
+import javax.swing.SpinnerModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
+import swingHelper.SwingHelper;
 import modelo.Astronauta;
 
 /**
@@ -16,6 +26,15 @@ import modelo.Astronauta;
 @SuppressWarnings("serial")
 public class AstronautaCreate extends javax.swing.JFrame {
 	
+	public Astronauta getNovoAstronauta() {
+		return novoAstronauta;
+	}
+
+	public void setNovoAstronauta(Astronauta novoAstronauta) {
+		this.novoAstronauta = novoAstronauta;
+	}
+
+	Astronauta novoAstronauta;
 	String meses[] = new String[] {"Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
 
     /**
@@ -61,8 +80,8 @@ public class AstronautaCreate extends javax.swing.JFrame {
         tfCidade = new javax.swing.JTextField();
         tfEstado = new javax.swing.JTextField();
         tfFoto = new javax.swing.JTextField();
-        tfBio = new javax.swing.JTextField();
-        tfBio_eng = new javax.swing.JTextField();
+        taBio = new javax.swing.JTextArea();
+        taBio_eng = new javax.swing.JTextArea();
         tfMissao1 = new javax.swing.JTextField();
         tfMissao2 = new javax.swing.JTextField();
         tfMissao3 = new javax.swing.JTextField();
@@ -72,18 +91,14 @@ public class AstronautaCreate extends javax.swing.JFrame {
         tfMissao7 = new javax.swing.JTextField();
         tfMissao8 = new javax.swing.JTextField();
         lSexo = new javax.swing.JLabel();
-        spDia_Nasc = new javax.swing.JSpinner();
-        spMes_Nasc = new javax.swing.JSpinner();
         spAno_Nasc = new javax.swing.JSpinner();
-        spDia_Falec = new javax.swing.JSpinner();
-        spMes_Falec = new javax.swing.JSpinner();
         spAno_Falec = new javax.swing.JSpinner();
         cbPais = new javax.swing.JComboBox();
         rbHomem = new javax.swing.JRadioButton();
         rbMulher = new javax.swing.JRadioButton();
         bgSexo.add(rbHomem);bgSexo.add(rbMulher);
-        jLabel21 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
+        lHomem = new javax.swing.JLabel();
+        lMulher = new javax.swing.JLabel();
         bSair = new javax.swing.JButton();
         lTitulo = new javax.swing.JLabel();
         bLimpar = new javax.swing.JButton();
@@ -113,9 +128,13 @@ public class AstronautaCreate extends javax.swing.JFrame {
         lSexo.setText("Sexo");
 
         limpaCampos();
-        
-        spMes_Nasc.setModel(new SpinnerDateModel());
 
+        
+        
+        spAno_Nasc = SwingHelper.addDateSpinner("Data de Nascimento");
+        spAno_Falec = SwingHelper.addDateSpinner("Data de Falecimento");
+    
+        
         cbPais.setModel(new javax.swing.DefaultComboBoxModel(new String[] {
 				"Afeganistão",
 				"África do Sul",
@@ -154,7 +173,7 @@ public class AstronautaCreate extends javax.swing.JFrame {
 				"Vietnã"		 }));
         cbPais.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox3ActionPerformed(evt);
+                cbPaisActionPerformed(evt);
             }
         });
 
@@ -162,9 +181,9 @@ public class AstronautaCreate extends javax.swing.JFrame {
 
         rbMulher.setText("");
 
-        jLabel21.setText("Masculino");
+        lHomem.setText("Masculino");
 
-        jLabel23.setText("Feminino");
+        lMulher.setText("Feminino");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -198,15 +217,15 @@ public class AstronautaCreate extends javax.swing.JFrame {
                             .addComponent(tfCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tfEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cbPais, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(spDia_Falec, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                                    .addComponent(spDia_Nasc))
+                            //.addGroup(jPanel1Layout.createSequentialGroup()
+                              //  .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                   // .addComponent(spDia_Falec, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                                   // .addComponent(spDia_Nasc))
                                 .addGap(5, 5, 5)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(spMes_Falec, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
-                                    .addComponent(spMes_Nasc))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                   // .addComponent(spMes_Falec, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
+                                   // .addComponent(spMes_Nasc))
+                                //.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(spAno_Nasc, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
                                     .addComponent(spAno_Falec)))
@@ -214,7 +233,7 @@ public class AstronautaCreate extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(rbHomem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel21)))
+                                .addComponent(lHomem)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -225,8 +244,8 @@ public class AstronautaCreate extends javax.swing.JFrame {
                                 .addComponent(lSobrenome)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(tfSobrenome, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE))
-                            .addComponent(tfBio, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfBio_eng, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(taBio, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(taBio_eng, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addGap(332, 332, 332)
                                 .addComponent(lBio_eng))
@@ -266,7 +285,7 @@ public class AstronautaCreate extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(rbMulher, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel23)
+                        .addComponent(lMulher)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
@@ -290,11 +309,11 @@ public class AstronautaCreate extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(tfBio)
+                        .addComponent(taBio)
                         .addGap(18, 18, 18)
                         .addComponent(lBio_eng)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfBio_eng, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(taBio_eng, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lMissao1)
@@ -318,14 +337,14 @@ public class AstronautaCreate extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lData_Nasc)
-                            .addComponent(spDia_Nasc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(spMes_Nasc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            //.addComponent(spDia_Nasc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            //.addComponent(spMes_Nasc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(spAno_Nasc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lData_Falec)
-                            .addComponent(spDia_Falec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(spMes_Falec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            //.addComponent(spDia_Falec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            //.addComponent(spMes_Falec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(spAno_Falec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -347,15 +366,15 @@ public class AstronautaCreate extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lSexo)
                             .addComponent(rbHomem)
-                            .addComponent(jLabel21))))
+                            .addComponent(lHomem))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rbMulher)
-                    .addComponent(jLabel23))
+                    .addComponent(lMulher))
                 .addGap(28, 28, 28))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {tfBio, tfBio_eng});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {taBio, taBio_eng});
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cbPais, tfCidade, tfEstado, tfFoto});
 
@@ -403,14 +422,14 @@ public class AstronautaCreate extends javax.swing.JFrame {
 	    		String estado = tfEstado.getText();
 	    		String cidade = tfCidade.getText();
 	    		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-	    	    java.util.Date dataN = format.parse(spAno_Nasc.getValue() + "-" + spMes_Nasc.getValue() + "-" + spDia_Nasc.getValue());
+	    	    java.util.Date dataN = format.parse(spAno_Nasc.getValue().toString());
 	    	    java.sql.Date data_nasc =  new java.sql.Date(dataN.getTime()); 
-	    	    java.util.Date dataF = format.parse(spAno_Falec.getValue() + "-" + spMes_Falec.getValue() + "-" + spDia_Falec.getValue());
+	    	    java.util.Date dataF = format.parse(spAno_Falec.getValue().toString());
 	    		java.sql.Date data_falec = new java.sql.Date(dataF.getTime());
 	    		String foto = tfFoto.getText();
-	    		String sexo = (rbHomem.isSelected())? "M" : "F";
-	    		String bio = tfBio.getText();
-	    		String bio_eng = tfBio_eng.getText();
+	    		String sexo = (rbHomem.isSelected()? "M" : "F");
+	    		String bio = taBio.getText();
+	    		String bio_eng = taBio_eng.getText();
 	    		String m1 = tfMissao1.getText();
 	    		String m2 = tfMissao2.getText();
 	    		String m3 = tfMissao3.getText();
@@ -450,7 +469,7 @@ public class AstronautaCreate extends javax.swing.JFrame {
 	    				null
 	    			);
 	    		
-	    		//this.setNovoAstronauta(novoAstronauta);	
+	    		setNovoAstronauta(novoAstronauta);	
 	    	}
 				
 			});
@@ -494,9 +513,11 @@ public class AstronautaCreate extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
-
+    }// </editor-fold>   
+    
+    
 	private void limpaCampos() {
+		
 		tfPrimeiro_Nome.setText("");
 
         tfNome_do_Meio.setText("");
@@ -509,9 +530,17 @@ public class AstronautaCreate extends javax.swing.JFrame {
 
         tfFoto.setText("");
 
-        tfBio.setText("");
+        taBio.setText("");
+        taBio.setLineWrap(true);
+        taBio.setWrapStyleWord(true);
+        //taBio.setMaximumSize(getSize());
+        taBio.setAutoscrolls(true);
 
-        tfBio_eng.setText("");
+        taBio_eng.setText("");
+        taBio_eng.setLineWrap(true);
+        taBio_eng.setWrapStyleWord(true);
+        //taBio_eng.setMaximumSize(getSize());
+        taBio_eng.setAutoscrolls(true);
 
         tfMissao1.setText("");
 
@@ -535,7 +564,7 @@ public class AstronautaCreate extends javax.swing.JFrame {
         System.exit(0);
     }                                        
 
-    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) { 
+    private void cbPaisActionPerformed(java.awt.event.ActionEvent evt) { 
     	String pais= cbPais.getSelectedItem().toString();
     }                                          
 
@@ -569,6 +598,8 @@ public class AstronautaCreate extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(AstronautaCreate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
+        
     		
 
         /* Create and display the form */
@@ -599,9 +630,9 @@ public class AstronautaCreate extends javax.swing.JFrame {
     private javax.swing.JLabel lMissao8;
     private javax.swing.JLabel lPrimeiro_Nome;
     private javax.swing.JLabel lFoto;
-    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel lHomem;
     private javax.swing.JLabel lSexo;
-    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel lMulher;
     private javax.swing.JLabel lNome_do_Meio;
     private javax.swing.JLabel lSobrenome;
     private javax.swing.JLabel lData_Nasc;
@@ -612,14 +643,10 @@ public class AstronautaCreate extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton rbHomem;
     private javax.swing.JRadioButton rbMulher;
-    private javax.swing.JSpinner spDia_Nasc;
-    private javax.swing.JSpinner spMes_Nasc;
     private javax.swing.JSpinner spAno_Nasc;
-    private javax.swing.JSpinner spDia_Falec;
-    private javax.swing.JSpinner spMes_Falec;
     private javax.swing.JSpinner spAno_Falec;
-    private javax.swing.JTextField tfBio;
-    private javax.swing.JTextField tfBio_eng;
+    private javax.swing.JTextArea taBio;
+    private javax.swing.JTextArea taBio_eng;
     private javax.swing.JTextField tfMissao1;
     private javax.swing.JTextField tfMissao2;
     private javax.swing.JTextField tfMissao3;
