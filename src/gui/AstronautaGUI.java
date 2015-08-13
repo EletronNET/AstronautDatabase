@@ -592,6 +592,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 			    					"Erro", JOptionPane.ERROR_MESSAGE, new ImageIcon("./imagens/vetor/scary.png") );
 			    			try (Connection con = AstronautaDB.getLocalConnection()){
 			    				AstronautaDAO dao = new AstronautaDAO(con);
+			    				
 			    				dao.salva(astronauta);
 			    			} catch (SQLException e1) {
 								// TODO Auto-generated catch block
