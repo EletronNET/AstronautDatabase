@@ -41,12 +41,11 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import crud.AstronautaCreate;
-import crud.AstronautaCreate2;
 import modelo.Astronauta;
 import modelo.ListaDeAstronautas;
 import modelo.ListaDePaises;
 import modelo.Pais;
+import crud.AstronautaCreate;
 import dao.AstronautaDAO;
 import dao.AstronautaDB;
 
