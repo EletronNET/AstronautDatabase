@@ -128,13 +128,10 @@ public class AstronautaCreate extends javax.swing.JFrame {
         lSexo.setText("Sexo");
 
         limpaCampos();
-
-        
-        
+   
         spAno_Nasc = SwingHelper.addDateSpinner("Data de Nascimento");
         spAno_Falec = SwingHelper.addDateSpinner("Data de Falecimento");
-    
-        
+            
         cbPais.setModel(new javax.swing.DefaultComboBoxModel(new String[] {
 				"Afeganistão",
 				"África do Sul",
