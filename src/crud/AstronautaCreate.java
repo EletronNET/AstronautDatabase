@@ -551,10 +551,12 @@ public class AstronautaCreate extends javax.swing.JFrame {
     }                                        
 
     private void cbPaisActionPerformed(java.awt.event.ActionEvent evt) { 
-    	String pais= cbPais.getSelectedItem().toString();
+    	@SuppressWarnings("unused")
+		String pais= cbPais.getSelectedItem().toString();
     }                                          
 
-    private void tfPrimeiro_NomeActionPerformed(java.awt.event.ActionEvent evt) {                                                
+    @SuppressWarnings("unused")
+	private void tfPrimeiro_NomeActionPerformed(java.awt.event.ActionEvent evt) {                                                
         // TODO add your handling code here:
     }                                               
 
