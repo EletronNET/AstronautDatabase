@@ -59,11 +59,12 @@ public class SwingHelper {
 	public static JSpinner addDateSpinner(String label){
 	  Calendar calendar=Calendar.getInstance();
 	  JSpinner dateSpinner;
+	  calendar.add(Calendar.YEAR,-100);
 	  Date initDate=calendar.getTime();
 	  Date latestDate=calendar.getTime();
 	  calendar.add(Calendar.YEAR,-100);
 	  Date earliestDate=calendar.getTime();
-	  SpinnerModel toModel=new SpinnerDateModel(initDate,earliestDate,latestDate,Calendar.HOUR_OF_DAY);
+	  SpinnerModel toModel=new SpinnerDateModel(initDate,earliestDate,latestDate,Calendar.DAY_OF_MONTH);
 	  dateSpinner=SwingHelper.addLabeledSpinner(label,toModel,true);
 	  dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner,"dd MMMM yyyy"));
 	  return dateSpinner;

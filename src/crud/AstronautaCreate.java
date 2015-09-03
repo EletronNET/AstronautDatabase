@@ -3,6 +3,8 @@ package crud;
 import java.awt.event.ActionEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import modelo.Astronauta;
@@ -15,6 +17,8 @@ import swingHelper.SwingHelper;
 @SuppressWarnings("serial")
 public class AstronautaCreate extends javax.swing.JFrame {
 	
+	Astronauta novoAstronauta;
+	
 	public Astronauta getNovoAstronauta() {
 		return novoAstronauta;
 	}
@@ -23,7 +27,7 @@ public class AstronautaCreate extends javax.swing.JFrame {
 		this.novoAstronauta = novoAstronauta;
 	}
 
-	Astronauta novoAstronauta;
+
 	String meses[] = new String[] {"Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
 
     /**
@@ -400,7 +404,7 @@ public class AstronautaCreate extends javax.swing.JFrame {
             }
 
 			@SuppressWarnings("null")
-			private void bSalvarActionPerformed(ActionEvent evt) throws ParseException {
+			private void bSalvarActionPerformed(ActionEvent evt) throws ParseException, NullPointerException {
 				String primeiro_nome = tfPrimeiro_Nome.getText();
 	    		String nome_do_meio = tfNome_do_Meio.getText();
 	    		String sobrenome = tfSobrenome.getText();
@@ -408,9 +412,9 @@ public class AstronautaCreate extends javax.swing.JFrame {
 	    		String estado = tfEstado.getText();
 	    		String cidade = tfCidade.getText();
 	    		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-	    	    java.util.Date dataN = format.parse(spAno_Nasc.getValue().toString());
+	    	    java.util.Date dataN = (Date) (spAno_Nasc.getValue());
 	    	    java.sql.Date data_nasc =  new java.sql.Date(dataN.getTime()); 
-	    	    java.util.Date dataF = format.parse(spAno_Falec.getValue().toString());
+	    	    java.util.Date dataF = (Date) (spAno_Falec.getValue());
 	    		java.sql.Date data_falec = new java.sql.Date(dataF.getTime());
 	    		String foto = tfFoto.getText();
 	    		String sexo = (rbHomem.isSelected()? "M" : "F");
@@ -425,15 +429,15 @@ public class AstronautaCreate extends javax.swing.JFrame {
 	    		String m7 = tfMissao7.getText();
 	    		String m8 = tfMissao8.getText();
 	    		
-	    		List<String> missao = null;
-	    		missao.add(m1);
-	    		missao.add(m2);
-	    		missao.add(m3);
-	    		missao.add(m4);
-	    		missao.add(m5);
-	    		missao.add(m6);
-	    		missao.add(m7);
-	    		missao.add(m8);
+	    		List<String> missao = new ArrayList<String>();
+	    		if (!m1.isEmpty()) missao.add(m1);
+	    		if (!m2.isEmpty()) missao.add(m2);
+	    		if (!m3.isEmpty()) missao.add(m3);
+	    		if (!m4.isEmpty()) missao.add(m4);
+	    		if (!m5.isEmpty()) missao.add(m5);
+	    		if (!m6.isEmpty()) missao.add(m6);
+	    		if (!m7.isEmpty()) missao.add(m7);
+	    		if (!m8.isEmpty()) missao.add(m8);
 	    		
 	    		int n_missoes = missao.size();
 	    		
@@ -527,6 +531,9 @@ public class AstronautaCreate extends javax.swing.JFrame {
         taBio_eng.setWrapStyleWord(true);
         //taBio_eng.setMaximumSize(getSize());
         taBio_eng.setAutoscrolls(true);
+        //cbPais.setSelectedIndex(1);
+        rbHomem.setSelected(false);
+        rbMulher.setSelected(false);
 
         tfMissao1.setText("");
 
