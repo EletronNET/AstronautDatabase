@@ -1,13 +1,24 @@
 package crud;
 
+import gui.AstronautaGUI;
+
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
+import dao.AstronautaDAO;
+import dao.ConnectionFactory;
 import modelo.Astronauta;
+import modelo.Pais;
 import swingHelper.SwingHelper;
 
 /**
@@ -18,6 +29,7 @@ import swingHelper.SwingHelper;
 public class AstronautaCreate extends javax.swing.JFrame {
 	
 	Astronauta novoAstronauta;
+	AstronautaDAO dao;
 	
 	public Astronauta getNovoAstronauta() {
 		return novoAstronauta;
@@ -27,13 +39,23 @@ public class AstronautaCreate extends javax.swing.JFrame {
 		this.novoAstronauta = novoAstronauta;
 	}
 
-
+	public ArrayList<Pais> paises;	
+	
+	public void setPaises(ArrayList<Pais> paises) {
+		this.paises = paises;
+	}
+	
 	String meses[] = new String[] {"Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
 
     /**
      * Creates new form AstronautaCreate
+     * @throws SQLException 
+     * @throws HeadlessException 
      */
-    public AstronautaCreate() {
+    public AstronautaCreate() throws HeadlessException, SQLException {
+    	//Connection con = chamaSQL();
+    	//dao = new AstronautaDAO(con);
+		//setPaises(dao.pegaPaises(con));
         initComponents();
     }
 
@@ -400,11 +422,19 @@ public class AstronautaCreate extends javax.swing.JFrame {
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				} catch (HeadlessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NullPointerException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
             }
 
-			@SuppressWarnings("null")
-			private void bSalvarActionPerformed(ActionEvent evt) throws ParseException, NullPointerException {
+			private void bSalvarActionPerformed(ActionEvent evt) throws ParseException, NullPointerException, HeadlessException, SQLException {
 				String primeiro_nome = tfPrimeiro_Nome.getText();
 	    		String nome_do_meio = tfNome_do_Meio.getText();
 	    		String sobrenome = tfSobrenome.getText();
@@ -460,6 +490,8 @@ public class AstronautaCreate extends javax.swing.JFrame {
 	    			);
 	    		
 	    		setNovoAstronauta(novoAstronauta);	
+	    		
+	    		dao.salva(novoAstronauta);
 	    	}
 				
 			});
@@ -504,6 +536,14 @@ public class AstronautaCreate extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>   
+    
+    public Connection chamaSQL() throws HeadlessException, SQLException {
+		try (Connection con = ConnectionFactory.getConnection()){
+			
+			return con;
+		}
+		
+	}
     
     
 	private void limpaCampos() {
@@ -600,7 +640,12 @@ public class AstronautaCreate extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AstronautaCreate().setVisible(true);
+                try {
+					new AstronautaCreate().setVisible(true);
+				} catch (HeadlessException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
     }

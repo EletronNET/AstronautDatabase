@@ -3,6 +3,9 @@
  */
 package modelo;
 
+import gui.AstronautaGUI;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Vector;
 
@@ -56,6 +59,24 @@ public class ListaDePaises extends JList<Pais>{
 		
 	}
 
+
+	public String mostraNome(String paisISO, ArrayList<Pais> paises){
+		for (Pais p : paises){
+			if (p.getId().equalsIgnoreCase(paisISO)){
+				return p.getNome();
+			} 
+		}
+		return null;
+	}
+
+	public String mostraISO(String pais, ArrayList<Pais> paises){
+		for (Pais p : paises){
+			if (p.getNome().equalsIgnoreCase(pais)){
+				return p.getId();
+			} 
+		}
+		return null;
+	}
 
 	/**
 	 * 

@@ -40,8 +40,9 @@ public class AstronautaDAO {
 				+ "Foto, "
 				+ "Info, "
 				+ "Info_eng, "
-				+ "m1, m2, m3, m4, m5, m6, m7, m8) "
-				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "m1, m2, m3, m4, m5, m6, m7, m8,"
+				+ "Imagem) "
+				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 		try (PreparedStatement stmt = con.prepareStatement(sql)) {
 
@@ -66,6 +67,8 @@ public class AstronautaDAO {
 			for (int k = numMissoes; k < 8; k++){
 				stmt.setString(14 + k, null);
 			}
+			
+			stmt.setBlob(22, astronauta.getImagem());
 
 			stmt.execute();
 
@@ -97,7 +100,7 @@ public class AstronautaDAO {
 		
 		String sql = "SELECT * FROM astronauta";
 
-		Connection con = AstronautaDB.getLocalConnection();
+		Connection con = ConnectionFactory.getConnection();
 
 		try (PreparedStatement stmt = con.prepareStatement(sql)) {
 			stmt.execute();

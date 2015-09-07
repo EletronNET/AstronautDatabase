@@ -59,7 +59,7 @@ public class SwingHelper {
 	public static JSpinner addDateSpinner(String label){
 	  Calendar calendar=Calendar.getInstance();
 	  JSpinner dateSpinner;
-	  calendar.add(Calendar.YEAR,-100);
+	  calendar.add(Calendar.YEAR,0);
 	  Date initDate=calendar.getTime();
 	  Date latestDate=calendar.getTime();
 	  calendar.add(Calendar.YEAR,-100);

@@ -5,14 +5,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import dao.AstronautaDB;
+import dao.ConnectionFactory;
 
 
 public class ListaPaises {
 
 	public static void main(String[] args) throws SQLException{
 
-		Connection connection = AstronautaDB.getLocalConnection();
+		Connection connection = ConnectionFactory.getConnection();
 		Statement statement = connection.createStatement();
 		@SuppressWarnings("unused")
 		boolean resultado = statement.execute("select * from paises");

@@ -47,13 +47,13 @@ import modelo.ListaDePaises;
 import modelo.Pais;
 import crud.AstronautaCreate;
 import dao.AstronautaDAO;
-import dao.AstronautaDB;
+import dao.ConnectionFactory;
 
 @SuppressWarnings("serial")
 public class AstronautaGUI extends JFrame implements ListSelectionListener {
 
 	private static ArrayList<Astronauta> 	astronautas;
-	private static ArrayList<Pais> 			paises;	
+	public static ArrayList<Pais> 			paises;	
 	private ListaDeAstronautas 				listaDeAstronautas; 						// caixa de lista p/ escolha nome
 	private ListaDePaises					listaDePaises;								// caixa de lista p/ escolha pais	
 	private JTextArea 						taInfo; 									// areas de texto p/ info astronauta
@@ -390,18 +390,16 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 	 * @throws SQLException
 	 */
 	public void consultaSQL() throws HeadlessException, SQLException {
-		try (Connection con = AstronautaDB.getRemoteConnection()){
+		try (Connection con = ConnectionFactory.getConnection()){
 			importaBD(con);
 		}	catch (SQLException e){
 			JOptionPane.showMessageDialog(null, 
-					"Não foi possível estabelecer conexão remota. Pressione OK para tentar conexão local...", 
+					"Não foi possível estabelecer conexão.", 
 					"Erro", JOptionPane.ERROR_MESSAGE, new ImageIcon("./imagens/vetor/scary.png") );
-			try (Connection con = AstronautaDB.getLocalConnection()){
-			importaBD(con);
+
 			}
 		}
 		
-	}
 
 	/**
 	 * @method importaBD
@@ -472,7 +470,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		String nome = selecionado.getPrimeiro_Nome() + " " 
 					+ selecionado.getNome_do_Meio() + " " 
 					+ selecionado.getSobrenome() + "\n";
-		String pais = mostraNome(selecionado.getPais_Nasc()) + "\n";
+		String pais = listaDePaises.mostraNome(selecionado.getPais_Nasc(), paises) + "\n";
 		String estado = selecionado.getEstado_Nasc() + "\n";
 		String cidade = selecionado.getCidade_Nasc() + "\n";
 		String dataNasc = (sdf.format(selecionado.getDtNasc()) + "\n");
@@ -581,22 +579,20 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		         
 		         // Banco de Dados - Inserir registro
 		         if (acao.equals(sBanco[8*3])){
-			        	Astronauta astronauta = new AstronautaCreate().getNovoAstronauta();
-			        	try (Connection con = AstronautaDB.getRemoteConnection()){
+			        	Astronauta astronauta = null;
+						try {
+							astronauta = new AstronautaCreate().getNovoAstronauta();
+						} catch (HeadlessException | SQLException e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}
+			        	try (Connection con = ConnectionFactory.getConnection()){
 			        		AstronautaDAO dao = new AstronautaDAO(con);
 			        		dao.salva(astronauta);
 			    		}	catch (SQLException evt){
 			    			JOptionPane.showMessageDialog(null, 
-			    					"Não foi possível estabelecer conexão remota. Pressione OK para tentar conexão local...", 
+			    					"Não foi possível estabelecer conexão remota...", 
 			    					"Erro", JOptionPane.ERROR_MESSAGE, new ImageIcon("./imagens/vetor/scary.png") );
-			    			try (Connection con = AstronautaDB.getLocalConnection()){
-			    				AstronautaDAO dao = new AstronautaDAO(con);
-			    				
-			    				dao.salva(astronauta);
-			    			} catch (SQLException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
 			    		}
 			        	
 			        	 //mostraMsgOperNaoImplementada();
@@ -848,24 +844,6 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 			} 
 			
 		}
-
-	public String mostraNome(String paisISO){
-		for (Pais p : paises){
-			if (p.getId().equalsIgnoreCase(paisISO)){
-				return p.getNome();
-			} 
-		}
-		return null;
-	}
-	
-	public String mostraISO(String pais){
-		for (Pais p : paises){
-			if (p.getNome().equalsIgnoreCase(pais)){
-				return p.getId();
-			} 
-		}
-		return null;
-	}
 
 	/**
 	 * 

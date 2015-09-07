@@ -6,13 +6,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import dao.AstronautaDB;
+import dao.ConnectionFactory;
 
 public class ListaAstronauta {
 
 	public static void main(String[] args) throws SQLException {
 
-		try	(Connection connection = AstronautaDB.getLocalConnection()) {
+		try	(Connection connection = ConnectionFactory.getConnection()) {
 
 			String sql = "SELECT * FROM astronauta";
 

@@ -31,7 +31,7 @@ import javax.swing.event.ListSelectionListener;
 import modelo.Astronauta;
 import modelo.Pais;
 import dao.AstronautaDAO;
-import dao.AstronautaDB;
+import dao.ConnectionFactory;
 
 @SuppressWarnings("serial")
 public class ListaSplit extends JFrame implements ListSelectionListener {
@@ -54,16 +54,10 @@ public class ListaSplit extends JFrame implements ListSelectionListener {
 		
 		// TENTA CONEXAO COM O BANCO DE DADOS
 			
-			try (Connection connection = AstronautaDB.getRemoteConnection()){
+			try (Connection connection = ConnectionFactory.getConnection()){
 				AstronautaDAO dao = new AstronautaDAO(connection);
 				astronautas = dao.pegaAstronautas(connection);
 				paises = dao.pegaPaises(connection);
-			}	catch (SQLException e){
-				try (Connection connection = AstronautaDB.getLocalConnection()){
-				AstronautaDAO dao = new AstronautaDAO(connection);
-				astronautas = dao.pegaAstronautas(connection);
-				paises = dao.pegaPaises(connection);
-				}
 			}
 			
 		// CRIA LISTA DE ASTRONAUTAS E CARREGA NO JLIST

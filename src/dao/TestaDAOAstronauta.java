@@ -37,7 +37,7 @@ public class TestaDAOAstronauta {
 				0, null
 				);
 
-		try (Connection con = AstronautaDB.getLocalConnection()) {
+		try (Connection con = ConnectionFactory.getConnection()) {
 			AstronautaDAO dao = new AstronautaDAO(con);
 			//dao.salva(astronauta);
 		
