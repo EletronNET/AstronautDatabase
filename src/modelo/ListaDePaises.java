@@ -3,8 +3,6 @@
  */
 package modelo;
 
-import gui.AstronautaGUI;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Vector;

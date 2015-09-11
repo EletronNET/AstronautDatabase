@@ -52,12 +52,14 @@ import dao.ConnectionFactory;
 @SuppressWarnings("serial")
 public class AstronautaGUI extends JFrame implements ListSelectionListener {
 
+	private Connection 						con;
 	private static ArrayList<Astronauta> 	astronautas;
 	public static ArrayList<Pais> 			paises;	
 	private ListaDeAstronautas 				listaDeAstronautas; 						// caixa de lista p/ escolha nome
 	private ListaDePaises					listaDePaises;								// caixa de lista p/ escolha pais	
 	private JTextArea 						taInfo; 									// areas de texto p/ info astronauta
 	private JTextArea 						taInfoBio;
+	private JTextArea						taInfoConnection;							// propriedades da conexão
 	private JLabel 							label; 										// label que contem a foto do astronauta
 	
 	private File arqFonte = new File ("./fontes/Spaceport.ttf"); 
@@ -163,6 +165,9 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 					strDataNasc = "ALL",
 					strGrupo = "ALL";
 	
+	private String ConProperties;
+	private String Ordem = sOrdenar[0];
+	
 	public static ArrayList<Astronauta> getAstronautas() {
 		return astronautas;
 	}
@@ -171,6 +176,14 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		AstronautaGUI.astronautas = astronautas;
 	}
 	
+	public Connection getCon() {
+		return con;
+	}
+
+	public void setCon(Connection con) {
+		this.con = con;
+	}
+
 	public static ArrayList<Pais> getPaises() {
 		return paises;
 	}
@@ -233,6 +246,14 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 
 	public void setStrGrupo(String strGrupo) {
 		this.strGrupo = strGrupo;
+	}
+
+	public String getOrdem() {
+		return Ordem;
+	}
+
+	public void setOrdem(String ordem) {
+		Ordem = ordem;
 	}
 
 	/*
@@ -325,8 +346,9 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 
 	/**
 	 * Cria painéis de divisão
+	 * @throws SQLException 
 	 */
-	private void criaPainel() {
+	private void criaPainel() throws SQLException {
 		// painel de divisao
 		JSplitPane split1 = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
 				new JLabel(new ImageIcon("imagens/vetor/logoAstroDB.png")), // imagem
@@ -345,7 +367,11 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 				split1, 
 				split3);
 		
-		getContentPane().add(split4, "Center"); // adiciona a janela
+		JSplitPane split5 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, 
+				split4, 
+				new JScrollPane(taInfoConnection = new JTextArea())); // area de info sobre conexão
+		
+		getContentPane().add(split5, "Center"); // adiciona a janela
 		
 		// outros ajustes
 		Font fonte;
@@ -373,7 +399,8 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		taInfo.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		taInfoBio.setLineWrap(true);
 		taInfoBio.setWrapStyleWord(true);
-		setSize(1200, 700); // dimensiona janela
+		
+		setSize(1200, 720); // dimensiona janela
 		listaDeAstronautas.addListSelectionListener(this);
 		listaDeAstronautas.setSelectedIndex(0); // elemento inicial da lista
 		//pack();
@@ -389,13 +416,13 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 	 * @throws HeadlessException
 	 * @throws SQLException
 	 */
-	public void consultaSQL() throws HeadlessException, SQLException {
+	public void consultaSQL() throws HeadlessException {
 		try (Connection con = ConnectionFactory.getConnection()){
+			setCon(con);
+			ConProperties = this.con.getMetaData().getURL();
 			importaBD(con);
 		}	catch (SQLException e){
-			JOptionPane.showMessageDialog(null, 
-					"Não foi possível estabelecer conexão.", 
-					"Erro", JOptionPane.ERROR_MESSAGE, new ImageIcon("./imagens/vetor/scary.png") );
+			throw new RuntimeException(e);
 
 			}
 		}
@@ -416,8 +443,8 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		
 		AstronautaDAO dao 	= new AstronautaDAO(connection);
 		
-		setAstronautas	(dao.pegaAstronautas(connection));
-		setPaises		(dao.pegaPaises(connection));
+		setAstronautas	(dao.pegaAstronautas());
+		setPaises		(dao.pegaPaises());
 	}
 	
 	
@@ -430,7 +457,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		 
 		listaDeAstronautas = new ListaDeAstronautas(getAstronautas());
 
-		System.out.println("Registros: " + getListaDeAstronautas().getModelAstro().getSize());
+		// System.out.println("Registros: " + getListaDeAstronautas().getModelAstro().getSize());
 				
 		// CRIA LISTA DE PAISES E CARREGA NO JLIST
 
@@ -494,8 +521,14 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 			sb2.append(s + "\n");
 		}
 		
+		StringBuilder sb3 = new StringBuilder("SERVIDOR: \t" + ConProperties + "\n");
+		sb3.append("REGISTROS: \t" + getListaDeAstronautas().getModel().getSize() + " registros encontrados." + "\n");
+		sb3.append("FILTROS: \t" + "[pais = " + getStrPais() + "] [sexo = " + getStrSexo() + "] [grupo = " + getStrGrupo() + "]" + "\n");
+		sb3.append("ORDEM: \t" + Ordem.substring(1));
+		
 		taInfo.setText(sb.toString());
 		taInfoBio.setText(sb2.toString());
+		taInfoConnection.setText(sb3.toString());
 		
 		BufferedImage img = null;
 		try {
@@ -682,27 +715,31 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		         // Ordenar por IdAstronauta = ordem de viagem ao espaço
 		         if (acao.equals(sOrdenar[0*3])) {
 		        	 //IdAstronautaComparator comparator = new IdAstronautaComparator();
+		        	 setOrdem(acao);
 		        	 Collections.sort(astronautas, OrdenarAstronautas.PorIdAstronauta.asc());
-		        	 listaDeAstronautas.filtra(getAstronautas(), getStrSexo(), getStrPais(), getStrGrupo());
+		        	 listaDeAstronautas.filtra(getAstronautas(), getStrSexo(), getStrPais(), getStrGrupo());		        	 
 		        	 ;}
 		         
 		         // Ordenar por sobrenome
 		         if (acao.equals(sOrdenar[1*3])) {
 		        	 //SobrenomeComparator comparator = new SobrenomeComparator();
+		        	 setOrdem(acao);
 		        	 Collections.sort(astronautas, OrdenarAstronautas.PorSobrenome.asc());
-		        	 listaDeAstronautas.filtra(getAstronautas(), getStrSexo(), getStrPais(), getStrGrupo());
+		        	 listaDeAstronautas.filtra(getAstronautas(), getStrSexo(), getStrPais(), getStrGrupo());		        	 
 		        	 ;}
 		         
 		         // Ordenar por data de nascimento
 		         if (acao.equals(sOrdenar[2*3])) {
 		        	 //DataNascComparator comparator = new DataNascComparator();
+		        	 setOrdem(acao);
 		        	 Collections.sort(astronautas, OrdenarAstronautas.PorDtNasc.asc());
-		        	 listaDeAstronautas.filtra(getAstronautas(), getStrSexo(), getStrPais(), getStrGrupo());
+		        	 listaDeAstronautas.filtra(getAstronautas(), getStrSexo(), getStrPais(), getStrGrupo());		        	 
 		        	 ;}
 		         
 		         // Ordenar por número de missões
 		         if (acao.equals(sOrdenar[3*3])) {
 		        	 //MissoesComparator comparator = new MissoesComparator();
+		        	 setOrdem(acao);
 		        	 Collections.sort(astronautas, OrdenarAstronautas.PorNumDeMissoes.desc());
 		        	 listaDeAstronautas.filtra(getAstronautas(), getStrSexo(), getStrPais(), getStrGrupo());
 		        	 ;}
@@ -710,14 +747,16 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		         // Ordenar por cidade de nascimento
 		         if (acao.equals(sOrdenar[4*3])) {
 		        	 //CidadeComparator comparator = new CidadeComparator();
+		        	 setOrdem(acao);
 		        	 Collections.sort(astronautas, OrdenarAstronautas.PorCidade.asc());
-		        	 listaDeAstronautas.filtra(getAstronautas(), getStrSexo(), getStrPais(), getStrGrupo());
+		        	 listaDeAstronautas.filtra(getAstronautas(), getStrSexo(), getStrPais(), getStrGrupo());		        	 
 		        	 ;}
 		         
 		         // Ordenar por tempo no espaço
 		         if (acao.equals(sOrdenar[5*3])) {
 		        	 //TODO: implementar
-		        	 mostraMsgOperNaoImplementada();
+		        	 setOrdem(acao);
+		        	 mostraMsgOperNaoImplementada();		        	 
 		        	 ;}
 		      }
 

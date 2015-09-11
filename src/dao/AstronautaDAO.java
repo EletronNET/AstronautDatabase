@@ -162,10 +162,10 @@ public class AstronautaDAO {
 		return astronautas;
 	}
 	
-	public ArrayList<Astronauta> pegaAstronautas(Connection connection)
+	public ArrayList<Astronauta> pegaAstronautas()
 			throws SQLException {
 		ArrayList<Astronauta> alAstros = new ArrayList<>();
-		Statement statement = connection.createStatement();
+		Statement statement = this.con.createStatement();
 		@SuppressWarnings("unused")
 		boolean resultado = statement.execute
 		("SELECT * FROM astronauta ORDER BY idAstronauta");
@@ -219,10 +219,10 @@ public class AstronautaDAO {
 			return alAstros;
 	}
 	
-	public ArrayList<Pais> pegaPaises(Connection connection)
+	public ArrayList<Pais> pegaPaises()
 			throws SQLException {
 		ArrayList<Pais> alPaises = new ArrayList<>();
-		Statement statement = connection.createStatement();
+		Statement statement = this.con.createStatement();
 		@SuppressWarnings("unused")
 		boolean resultado = statement.execute
 		("SELECT * FROM paises");

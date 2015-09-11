@@ -56,8 +56,8 @@ public class ListaSplit extends JFrame implements ListSelectionListener {
 			
 			try (Connection connection = ConnectionFactory.getConnection()){
 				AstronautaDAO dao = new AstronautaDAO(connection);
-				astronautas = dao.pegaAstronautas(connection);
-				paises = dao.pegaPaises(connection);
+				astronautas = dao.pegaAstronautas();
+				paises = dao.pegaPaises();
 			}
 			
 		// CRIA LISTA DE ASTRONAUTAS E CARREGA NO JLIST

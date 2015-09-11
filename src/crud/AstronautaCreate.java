@@ -1,7 +1,5 @@
 package crud;
 
-import gui.AstronautaGUI;
-
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
@@ -12,14 +10,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-
-import dao.AstronautaDAO;
-import dao.ConnectionFactory;
 import modelo.Astronauta;
 import modelo.Pais;
 import swingHelper.SwingHelper;
+import dao.AstronautaDAO;
+import dao.ConnectionFactory;
 
 /**
  *
@@ -441,7 +436,8 @@ public class AstronautaCreate extends javax.swing.JFrame {
 	    		String pais = cbPais.getSelectedItem().toString();
 	    		String estado = tfEstado.getText();
 	    		String cidade = tfCidade.getText();
-	    		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	    		@SuppressWarnings("unused")
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 	    	    java.util.Date dataN = (Date) (spAno_Nasc.getValue());
 	    	    java.sql.Date data_nasc =  new java.sql.Date(dataN.getTime()); 
 	    	    java.util.Date dataF = (Date) (spAno_Falec.getValue());
