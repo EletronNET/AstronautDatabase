@@ -523,7 +523,7 @@ public class AstronautaGUI extends JFrame implements ListSelectionListener {
 		
 		StringBuilder sb3 = new StringBuilder("SERVIDOR: \t" + ConProperties + "\n");
 		sb3.append("REGISTROS: \t" + getListaDeAstronautas().getModel().getSize() + " registros encontrados." + "\n");
-		sb3.append("FILTROS: \t" + "[pais = " + getStrPais() + "] [sexo = " + getStrSexo() + "] [grupo = " + getStrGrupo() + "]" + "\n");
+		sb3.append("FILTROS: \t" + "[pais = " + listaDePaises.mostraNome(getStrPais(), paises) + "] [sexo = " + getStrSexo() + "] [grupo = " + getStrGrupo() + "]" + "\n");
 		sb3.append("ORDEM: \t" + Ordem.substring(1));
 		
 		taInfo.setText(sb.toString());
