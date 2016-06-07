@@ -54,8 +54,9 @@ public class Astronauta {
 			LocalDate dtNasc,
 			LocalDate dtFalec,
 			List<String> missao,
-			int n_missoes,
-			Blob imagem) {
+			int n_missoes
+			//Blob imagem
+			) {
 		super();
 		this.idAstronauta = idAstronauta;
 		Primeiro_Nome = primeiro_Nome;
@@ -72,7 +73,7 @@ public class Astronauta {
 		DtFalec = dtFalec;
 		this.missao = missao;
 		N_missoes = n_missoes;
-		Imagem = imagem;
+		//Imagem = imagem;
 	}
 
 	// construtor sem idAstronauta
@@ -106,7 +107,7 @@ public class Astronauta {
 		DtFalec = dtFalec;
 		this.missao = missao;
 		N_missoes = n_missoes;
-		Imagem = null;
+		//Imagem = null;
 	}
 
 	public Astronauta() {
@@ -207,13 +208,22 @@ public class Astronauta {
 	public void setN_missoes(int n_missoes) {
 		N_missoes = n_missoes;
 	}
-
+/*
 	public Blob getImagem() {
 		return Imagem;
 	}
 
 	public void setImagem(Blob imagem) {
 		Imagem = imagem;
+	}*/
+
+	/*****************************************************************************************
+	 FUNCAO isAlive()
+	 retorno: Boolean
+	 ******************************************************************************************/
+
+	public boolean isAlive(){
+		return !this.getDtFalec().isBefore(LocalDate.now());
 	}
 
 	@Override

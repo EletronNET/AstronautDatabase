@@ -2,7 +2,7 @@ package modelo;
 
 import java.util.Comparator;
 
-public class CidadeComparator implements Comparator<Astronauta> {
+class CidadeComparator implements Comparator<Astronauta> {
     public int compare(Astronauta astronauta, Astronauta outroAstronauta) {
         return astronauta.getCidade_Nasc().
                 compareTo(outroAstronauta.getCidade_Nasc());
